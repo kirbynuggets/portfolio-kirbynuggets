@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Linux Experience</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Boot Screen -->
+    <div class="screen boot-screen" id="bootScreen">
+        <div class="boot-text" id="bootText">
+            <!-- Boot messages will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="screen login-screen hidden" id="loginScreen">
+        <div class="distro-logo">🐧</div>
+        <div class="hostname">dev-portfolio</div>
+        <div class="login-form">
+            <div class="user-select">
+                <div class="user-item" onclick="loginDesktop()">
+                    <div class="user-avatar">👨‍💻</div>
+                    <div class="user-info">
+                        <h3>developer</h3>
+                        <p>Full Stack Developer</p>
+                    </div>
+                </div>
+                <div class="user-item" onclick="loginDesktop()">
+                    <div class="user-avatar">🔧</div>
+                    <div class="user-info">
+                        <h3>admin</h3>
+                        <p>System Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Screen -->
+    <div class="screen desktop-screen hidden" id="desktopScreen">
+        <!-- Top Panel -->
+        <div class="top-panel">
+            <div class="panel-left">
+                <div class="activities-button">Activities</div>
+                <span>Applications</span>
+                <span>Places</span>
+            </div>
+            <div class="panel-right">
+                <div class="system-indicators">
+                    <span>🔊</span>
+                    <span>📶</span>
+                    <span>🔋</span>
+                    <span id="panelTime">Sun Jun 1 12:34</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" ondblclick="openWindow('about')">
+                <div class="desktop-icon-image">📄</div>
+                <span>About Me</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('projects')">
+                <div class="desktop-icon-image">📁</div>
+                <span>Projects</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('contact')">
+                <div class="desktop-icon-image">📧</div>
+                <span>Contact</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('terminal')">
+                <div class="desktop-icon-image">💻</div>
+                <span>Terminal</span>
+            </div>
+            <div class="desktop-icon">
+                <div class="desktop-icon-image">🗑️</div>
+                <span>Trash</span>
+            </div>
+        </div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="app-launcher">🐧</div>
+            <div class="taskbar-apps" id="taskbarApps">
+                <div class="taskbar-app">Firefox</div>
+                <div class="taskbar-app">Files</div>
+            </div>
+        </div>
+
+        <!-- Windows -->
+        <div class="window gui-window about-window" id="aboutWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('about')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">About Me - Text Editor</div>
+            </div>
+            <div class="gui-content">
+                <div class="portfolio-content">
+                    <h1>John Developer</h1>
+                    <p class="subtitle">$ whoami | grep passion</p>
+                    <p>Welcome to my Linux-powered portfolio! I'm a passionate developer who believes in the power of open source and the beauty of clean, efficient code.</p>
+                    <p>When I'm not coding, you'll find me contributing to open source projects, customizing my Linux rice, or exploring the latest in cloud technologies.</p>
+                    <div class="skills">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                    </div>
+                    <p><strong>Current Setup:</strong> Arch Linux + i3wm + Neovim</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="window gui-window projects-window" id="projectsWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('projects')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Projects - File Manager</div>
+            </div>
+            <div class="gui-content">
+                <h2 style="color: #00ff41; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px;">~/Projects</h2>
+                
+                <div class="project-item">
+                    <h3>📂 cloud-automation/</h3>
+                    <p>Infrastructure as Code toolkit for automated cloud deployments using Terraform and Ansible. Features multi-cloud support and CI/CD integration.</p>
+                    <small style="color: #00bfff;">Languages: Python, HCL, YAML | Stars: 234</small>
+                </div>
+                
+                <div class="project-item">
+                    <h3>📂 linux-dotfiles/</h3>
+                    <p>My personal Linux configuration files and setup scripts. Features automated rice installation with i3, polybar, and custom themes.</p>
+                    <small style="color: #00bfff;">Languages: Bash, Lua, Config files | Stars: 189</small>
+                </div>
+                
+                <div class="project-item">
+                    <h3>📂 api-microservice/</h3>
+                    <p>Containerized microservice architecture with Docker, Redis, and PostgreSQL. Includes load balancing and monitoring.</p>
+                    <small style="color: #00bfff;">Languages: Node.js, Docker, SQL | Stars: 156</small>
+                </div>
+
+                <div class="project-item">
+                    <h3>📂 terminal-portfolio/</h3>
+                    <p>Interactive terminal-based portfolio with ASCII art, command completion, and real-time system monitoring.</p>
+                    <small style="color: #00bfff;">Languages: Rust, Shell | Stars: 298</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="window gui-window contact-window" id="contactWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('contact')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Contact - Thunderbird</div>
+            </div>
+            <div class="gui-content">
+                <h2 style="color: #00ff41; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px;">Get In Touch</h2>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <strong>Email</strong><br>
+                        <small>dev@yourlinuxbox.com</small>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🐙</div>
+                    <div>
+                        <strong>GitHub</strong><br>
+                        <small>github.com/yourlinuxdev</small>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💬</div>
+                    <div>
+                        <strong>Matrix</strong><br>
+                        <small>@developer:matrix.org</small>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🐦</div>
+                    <div>
+                        <strong>Mastodon</strong><br>
+                        <small>@dev@fosstodon.org</small>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💼</div>
+                    <div>
+                        <strong>LinkedIn</strong><br>
+                        <small>/in/linuxdeveloper</small>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 30px; font-style: italic; color: #00bfff; text-align: center;">"Talk is cheap. Show me the code." - Linus Torvalds</p>
+            </div>
+        </div>
+
+        <div class="window terminal-window" id="terminalWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('terminal')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Terminal - bash</div>
+            </div>
+            <div class="terminal-content" id="terminalContent">
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="command"> whoami</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">Full Stack Developer & Linux Enthusiast</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="command"> ls -la skills/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">drwxr-xr-x  frontend/     backend/      devops/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">drwxr-xr-x  linux/        opensource/   automation/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="command"> cat motto.txt</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">"Code, Contribute, Collaborate"</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="command"> neofetch</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">OS: Arch Linux x86_64</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">WM: i3</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">Shell: zsh 5.9</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">Terminal: alacritty</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">Editor: neovim</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="cursor"> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

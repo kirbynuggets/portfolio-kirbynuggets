@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Linux Experience</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Ubuntu:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            overflow: hidden;
+            background: #0a0a0a;
+            cursor: default;
+            color: #00ff41;
+        }
+
+        .screen {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ff41;
+            border-radius: 50%;
+            animation: float 10s infinite linear;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Boot Screen */
+        .boot-screen {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: #00ff41;
+            position: relative;
+        }
+
+        .boot-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, transparent 98%, #00ff41 100%),
+                linear-gradient(0deg, transparent 98%, #00ff41 100%);
+            background-size: 20px 20px;
+            opacity: 0.1;
+            animation: matrix 20s linear infinite;
+        }
+
+        @keyframes matrix {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(-20px) translateX(-20px); }
+        }
+
+        .boot-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .boot-line {
+            opacity: 0;
+            animation: typewriter 0.1s ease-in-out forwards;
+            margin-bottom: 4px;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        @keyframes typewriter {
+            from { 
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .boot-line.ok::after {
+            content: " [ OK ]";
+            color: #00ff41;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff41;
+        }
+
+        .boot-line.loading::after {
+            content: "...";
+            animation: dots 1s infinite;
+        }
+
+        @keyframes dots {
+            0%, 33% { content: "..."; }
+            34%, 66% { content: "...."; }
+            67%, 100% { content: "....."; }
+        }
+
+        /* Login Screen */
+        .login-screen {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #21262d 100%);
+            flex-direction: column;
+            color: #ffffff;
+            font-family: 'Ubuntu', sans-serif;
+            position: relative;
+        }
+
+        .login-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .distro-logo {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            color: #00ff41;
+            text-shadow: 0 0 30px rgba(0, 255, 65, 0.8);
+            animation: glow 2s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 30px rgba(0, 255, 65, 0.8); }
+            to { text-shadow: 0 0 50px rgba(0, 255, 65, 1), 0 0 70px rgba(0, 255, 65, 0.8); }
+        }
+
+        .hostname {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-form {
+            background: rgba(13, 17, 23, 0.7);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            backdrop-filter: blur(20px);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-select {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid transparent;
+            min-width: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .user-item:hover::before {
+            left: 100%;
+        }
+
+        .user-item:hover {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: #00ff41;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00ff41, #00bfff);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .user-info h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .user-info p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.8;
+            color: #00ff41;
+        }
+
+        /* Desktop Screen */
+        .desktop-screen {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #21262d 100%);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 0;
+            position: relative;
+        }
+
+        .desktop-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="%2300ff41" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes gridMove {
+            from { transform: translate(0, 0); }
+            to { transform: translate(20px, 20px); }
+        }
+
+        /* Top Panel */
+        .top-panel {
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(13, 17, 23, 0.9), rgba(22, 27, 34, 0.9));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .panel-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .activities-button {
+            background: rgba(0, 255, 65, 0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+        }
+
+        .activities-button:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        }
+
+        .system-indicators {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Desktop Icons */
+        .desktop-icons {
+            position: absolute;
+            top: 70px;
+            left: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .desktop-icon {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            padding: 12px 18px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            max-width: 250px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .desktop-icon:hover {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: rgba(0, 255, 65, 0.5);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .desktop-icon-image {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 5px rgba(0, 255, 65, 0.5));
+        }
+
+        /* Bottom Panel/Taskbar */
+        .taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(to bottom, rgba(13, 17, 23, 0.9), rgba(22, 27, 34, 0.9));
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 15px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-launcher {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00ff41, #00bfff);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .app-launcher:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.7);
+        }
+
+        .taskbar-apps {
+            display: flex;
+            gap: 8px;
+            margin-left: 15px;
+        }
+
+        .taskbar-app {
+            height: 35px;
+            padding: 0 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .taskbar-app:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(0, 255, 65, 0.5);
+        }
+
+        .taskbar-app.active {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        /* Terminal Window */
+        .window {
+            position: absolute;
+            background: rgba(13, 17, 23, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+            backdrop-filter: blur(20px);
+        }
+
+        .window.active {
+            display: flex;
+            animation: windowOpen 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes windowOpen {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .window-header {
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(22, 27, 34, 0.9), rgba(13, 17, 23, 0.9));
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-control {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .window-control:hover {
+            transform: scale(1.2);
+        }
+
+        .window-control.close { 
+            background: linear-gradient(135deg, #ff5f56, #ff2d20);
+            box-shadow: 0 0 10px rgba(255, 45, 32, 0.5);
+        }
+        .window-control.minimize { 
+            background: linear-gradient(135deg, #ffbd2e, #ffaa00);
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+        }
+        .window-control.maximize { 
+            background: linear-gradient(135deg, #28ca42, #00aa00);
+            box-shadow: 0 0 10px rgba(0, 170, 0, 0.5);
+        }
+
+        .window-title {
+            margin-left: 15px;
+            font-size: 14px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .terminal-content {
+            flex: 1;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #00ff41;
+            font-size: 14px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            line-height: 1.4;
+        }
+
+        .prompt {
+            color: #00bfff;
+            text-shadow: 0 0 5px rgba(0, 191, 255, 0.7);
+        }
+
+        .command {
+            color: #ffffff;
+            margin-left: 5px;
+        }
+
+        .output {
+            color: #00ff41;
+            margin-left: 0;
+            text-shadow: 0 0 3px rgba(0, 255, 65, 0.5);
+        }
+
+        .cursor {
+            background: #00ff41;
+            color: #000;
+            animation: blink 1s infinite;
+            box-shadow: 0 0 5px #00ff41;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* GUI Window */
+        .gui-window {
+            background: rgba(33, 38, 45, 0.95);
+            color: #ffffff;
+            border: 2px solid rgba(0, 255, 65, 0.3);
+        }
+
+        .gui-window .window-header {
+            background: linear-gradient(to bottom, rgba(22, 27, 34, 0.9), rgba(13, 17, 23, 0.9));
+            color: #ffffff;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .gui-content {
+            flex: 1;
+            padding: 30px;
+            background: rgba(13, 17, 23, 0.8);
+            overflow-y: auto;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        .about-window {
+            width: 600px;
+            height: 500px;
+            top: 80px;
+            left: 200px;
+        }
+
+        .projects-window {
+            width: 700px;
+            height: 550px;
+            top: 60px;
+            left: 300px;
+        }
+
+        .contact-window {
+            width: 500px;
+            height: 400px;
+            top: 120px;
+            left: 450px;
+        }
+
+        .terminal-window {
+            width: 750px;
+            height: 500px;
+            top: 100px;
+            left: 150px;
+        }
+
+        .portfolio-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #00ff41;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.7);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .portfolio-content .subtitle {
+            font-size: 1.2rem;
+            color: #00bfff;
+            margin-bottom: 25px;
+            font-style: italic;
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+
+        .portfolio-content p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #e6e6e6;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #00ff41, #00bfff);
+            color: #000;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .project-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .project-item:hover {
+            border-color: rgba(0, 255, 65, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .project-item h3 {
+            color: #00ff41;
+            margin-bottom: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            border-color: rgba(0, 255, 65, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 24px;
+            color: #00ff41;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Boot Screen -->
+    <div class="screen boot-screen" id="bootScreen">
+        <div class="boot-text" id="bootText">
+            <!-- Boot messages will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="screen login-screen hidden" id="loginScreen">
+        <div class="distro-logo">🐧</div>
+        <div class="hostname">dev-portfolio</div>
+        <div class="login-form">
+            <div class="user-select">
+                <div class="user-item" onclick="loginDesktop()">
+                    <div class="user-avatar">👨‍💻</div>
+                    <div class="user-info">
+                        <h3>developer</h3>
+                        <p>Full Stack Developer</p>
+                    </div>
+                </div>
+                <div class="user-item" onclick="loginDesktop()">
+                    <div class="user-avatar">🔧</div>
+                    <div class="user-info">
+                        <h3>admin</h3>
+                        <p>System Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Screen -->
+    <div class="screen desktop-screen hidden" id="desktopScreen">
+        <!-- Top Panel -->
+        <div class="top-panel">
+            <div class="panel-left">
+                <div class="activities-button">Activities</div>
+                <span>Applications</span>
+                <span>Places</span>
+            </div>
+            <div class="panel-right">
+                <div class="system-indicators">
+                    <span>🔊</span>
+                    <span>📶</span>
+                    <span>🔋</span>
+                    <span id="panelTime">Sun Jun 1 12:34</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" ondblclick="openWindow('about')">
+                <div class="desktop-icon-image">📄</div>
+                <span>About Me</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('projects')">
+                <div class="desktop-icon-image">📁</div>
+                <span>Projects</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('contact')">
+                <div class="desktop-icon-image">📧</div>
+                <span>Contact</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('terminal')">
+                <div class="desktop-icon-image">💻</div>
+                <span>Terminal</span>
+            </div>
+            <div class="desktop-icon">
+                <div class="desktop-icon-image">🗑️</div>
+                <span>Trash</span>
+            </div>
+        </div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="app-launcher">🐧</div>
+            <div class="taskbar-apps" id="taskbarApps">
+                <div class="taskbar-app">Firefox</div>
+                <div class="taskbar-app">Files</div>
+            </div>
+        </div>
+
+        <!-- Windows -->
+        <div class="window gui-window about-window" id="aboutWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('about')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">About Me - Text Editor</div>
+            </div>
+            <div class="gui-content">
+                <div class="portfolio-content">
+                    <h1>John Developer</h1>
+                    <p class="subtitle">$ whoami | grep passion</p>
+                    <p>Welcome to my Linux-powered portfolio! I'm a passionate developer who believes in the power of open source and the beauty of clean, efficient code.</p>
+                    <p>When I'm not coding, you'll find me contributing to open source projects, customizing my Linux rice, or exploring the latest in cloud technologies.</p>
+                    <div class="skills">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                    </div>
+                    <p><strong>Current Setup:</strong> Arch Linux + i3wm + Neovim</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="window gui-window projects-window" id="projectsWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('projects')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Projects - File Manager</div>
+            </div>
+            <div class="gui-content">
+                <h2 style="color: #00ff41; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px;">~/Projects</h2>
+                
+                <div class="project-item">
+                    <h3>📂 cloud-automation/</h3>
+                    <p>Infrastructure as Code toolkit for automated cloud deployments using Terraform and Ansible. Features multi-cloud support and CI/CD integration.</p>
+                    <small style="color: #00bfff;">Languages: Python, HCL, YAML | Stars: 234</small>
+                </div>
+                
+                <div class="project-item">
+                    <h3>📂 linux-dotfiles/</h3>
+                    <p>My personal Linux configuration files and setup scripts. Features automated rice installation with i3, polybar, and custom themes.</p>
+                    <small style="color: #00bfff;">Languages: Bash, Lua, Config files | Stars: 189</small>
+                </div>
+                
+                <div class="project-item">
+                    <h3>📂 api-microservice/</h3>
+                    <p>Containerized microservice architecture with Docker, Redis, and PostgreSQL. Includes load balancing and monitoring.</p>
+                    <small style="color: #00bfff;">Languages: Node.js, Docker, SQL | Stars: 156</small>
+                </div>
+
+                <div class="project-item">
+                    <h3>📂 terminal-portfolio/</h3>
+                    <p>Interactive terminal-based portfolio with ASCII art, command completion, and real-time system monitoring.</p>
+                    <small style="color: #00bfff;">Languages: Rust, Shell | Stars: 298</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="window gui-window contact-window" id="contactWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('contact')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Contact - Thunderbird</div>
+            </div>
+            <div class="gui-content">
+                <h2 style="color: #00ff41; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px;">Get In Touch</h2>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <strong>Email</strong><br>
+                        <small>dev@yourlinuxbox.com</small>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🐙</div>
+                    <div>
+                        <strong>GitHub</strong><br>
+                        <small>github.com/yourlinuxdev</small>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💬</div>
+                    <div>
+                        <strong>Matrix</strong><br>
+                        <small>@developer:matrix.org</small>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🐦</div>
+                    <div>
+                        <strong>Mastodon</strong><br>
+                        <small>@dev@fosstodon.org</small>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💼</div>
+                    <div>
+                        <strong>LinkedIn</strong><br>
+                        <small>/in/linuxdeveloper</small>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 30px; font-style: italic; color: #00bfff; text-align: center;">"Talk is cheap. Show me the code." - Linus Torvalds</p>
+            </div>
+        </div>
+
+        <div class="window terminal-window" id="terminalWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('terminal')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Terminal - bash</div>
+            </div>
+            <div class="terminal-content" id="terminalContent">
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="command"> whoami</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">Full Stack Developer & Linux Enthusiast</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="command"> ls -la skills/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">drwxr-xr-x  frontend/     backend/      devops/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">drwxr-xr-x  linux/        opensource/   automation/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="command"> cat motto.txt</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">"Code, Contribute, Collaborate"</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="command"> neofetch</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">OS: Arch Linux x86_64</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">WM: i3</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">Shell: zsh 5.9</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">Terminal: alacritty</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">Editor: neovim</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">developer@portfolio:~$</span>
+                    <span class="cursor"> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Boot messages
+        const bootMessages = [
+            "Loading Linux kernel...",
+            "Initializing hardware components...",
+            "Starting system services...",
+            "Loading network modules...",
+            "Mounting filesystems...",
+            "Starting display manager...",
+            "Initializing portfolio environment...",
+            "Loading user profile...",
+            "Starting desktop environment...",
+            "System ready."
+        ];
+
+        // Boot sequence
+        function startBoot() {
+            const bootText = document.getElementById('bootText');
+            let delay = 0;
+
+            bootMessages.forEach((message, index) => {
+                setTimeout(() => {
+                    const line = document.createElement('div');
+                    line.className = 'boot-line';
+                    line.textContent = `[  ${(Date.now() / 1000).toFixed(3)}  ] ${message}`;
+                    
+                    if (index < bootMessages.length - 1) {
+                        line.classList.add('ok');
+                    }
+                    
+                    line.style.animationDelay = '0s';
+                    bootText.appendChild(line);
+
+                    if (index === bootMessages.length - 1) {
+                        setTimeout(() => {
+                            document.getElementById('bootScreen').classList.add('hidden');
+                            document.getElementById('loginScreen').classList.remove('hidden');
+                        }, 1500);
+                    }
+                }, delay);
+                delay += 400;
+            });
+        }
+
+        // Update time displays
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+
+            document.getElementById('panelTime').textContent = timeString;
+        }
+
+        function loginDesktop() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('desktopScreen').classList.remove('hidden');
+        }
+
+        function openWindow(windowType) {
+            const window = document.getElementById(windowType + 'Window');
+            window.classList.add('active');
+            
+            // Add to taskbar
+            const taskbarApps = document.getElementById('taskbarApps');
+            const existingApp = document.querySelector(`[data-window="${windowType}"]`);
+            
+            if (!existingApp) {
+                const appButton = document.createElement('div');
+                appButton.className = 'taskbar-app active';
+                appButton.setAttribute('data-window', windowType);
+                appButton.textContent = windowType.charAt(0).toUpperCase() + windowType.slice(1);
+                appButton.onclick = () => toggleWindow(windowType);
+                taskbarApps.appendChild(appButton);
+            } else {
+                existingApp.classList.add('active');
+            }
+        }
+
+        function closeWindow(windowType) {
+            const window = document.getElementById(windowType + 'Window');
+            window.classList.remove('active');
+            
+            // Remove from taskbar
+            const appButton = document.querySelector(`[data-window="${windowType}"]`);
+            if (appButton) {
+                appButton.remove();
+            }
+        }
+
+        function toggleWindow(windowType) {
+            const window = document.getElementById(windowType + 'Window');
+            const appButton = document.querySelector(`[data-window="${windowType}"]`);
+            
+            if (window.classList.contains('active')) {
+                window.classList.remove('active');
+                appButton.classList.remove('active');
+            } else {
+                window.classList.add('active');
+                appButton.classList.add('active');
+            }
+        }
+
+        // Window management
+        document.querySelectorAll('.window').forEach((window, index) => {
+            window.addEventListener('click', () => {
+                // Bring to front
+                window.style.zIndex = 1000 + Date.now();
+            });
+
+            // Make windows draggable
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            const header = window.querySelector('.window-header');
+            
+            header.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+
+            function dragStart(e) {
+                if (e.target.classList.contains('window-control')) return;
+                
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+
+                if (e.target === header || header.contains(e.target)) {
+                    isDragging = true;
+                }
+            }
+
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+
+                    xOffset = currentX;
+                    yOffset = currentY;
+
+                    window.style.transform = `translate(${currentX}px, ${currentY}px)`;
+                }
+            }
+
+            function dragEnd() {
+                isDragging = false;
+            }
+        });
+
+        // Initialize
+        createParticles();
+        updateTime();
+        setInterval(updateTime, 1000);
+        startBoot();
+
+        // Add some terminal interactivity
+        setTimeout(() => {
+            const terminalContent = document.getElementById('terminalContent');
+            if (terminalContent) {
+                terminalContent.addEventListener('click', () => {
+                    const cursor = terminalContent.querySelector('.cursor');
+                    if (cursor) {
+                        cursor.focus();
+                    }
+                });
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
