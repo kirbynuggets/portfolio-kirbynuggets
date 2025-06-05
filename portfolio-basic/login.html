@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>portfolioOS - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Animated Background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 10s infinite linear;
+            opacity: 0.6;
+        }
+        .particle.type1 {
+            width: 2px;
+            height: 2px;
+            background: #00ff41;
+            box-shadow: 0 0 6px #00ff41;
+        }
+        .particle.type2 {
+            width: 3px;
+            height: 3px;
+            background: #00bfff;
+            box-shadow: 0 0 8px #00bfff;
+        }
+        .particle.type3 {
+            width: 1px;
+            height: 1px;
+            background: #ff6b35;
+            box-shadow: 0 0 4px #ff6b35;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Main Content */
+        .login-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-card {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px 40px;
+            width: 420px;
+            text-align: center;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+        }
+        .logo {
+            margin-bottom: 32px;
+        }
+        .logo h1 {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+        .logo .version {
+            color: #888;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        .user-profile {
+            margin-bottom: 32px;
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 48px;
+            font-weight: 300;
+            color: #0a0a0a;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        .username {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .user-type {
+            color: #00ff88;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        .login-button {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .login-button:hover {
+            background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+            border-color: #00ff88;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+        }
+        .login-button:hover::before {
+            left: 100%;
+        }
+        .login-button:active {
+            transform: translateY(0);
+        }
+        /* System status */
+        .system-status {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            gap: 16px;
+            z-index: 20;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            font-size: 14px;
+            background: rgba(26, 26, 26, 0.6);
+            padding: 8px 12px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+        }
+        /* Terminal cursor animation */
+        .cursor {
+            display: inline-block;
+            background: #00ff88;
+            width: 2px;
+            height: 20px;
+            animation: blink 1s infinite;
+            margin-left: 4px;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        /* Loading animation */
+        .loading {
+            display: none;
+            margin-top: 16px;
+        }
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+        }
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            animation: loading 1.4s infinite ease-in-out;
+        }
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes loading {
+            0%, 80%, 100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-card {
+                width: 90%;
+                padding: 32px 24px;
+            }
+            
+            .system-status {
+                position: static;
+                justify-content: center;
+                margin-bottom: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- System Status -->
+    <div class="system-status">
+        <div class="status-item">
+            <div class="status-dot"></div>
+            <span>System Online</span>
+        </div>
+        <div class="status-item">
+            <div class="status-dot"></div>
+            <span>Portfolio Ready</span>
+        </div>
+    </div>
+    
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <h1>portfolioOS</h1>
+                <div class="version">v2.1.0 - Linux Edition</div>
+            </div>
+            <div class="user-profile">
+                <div class="avatar">
+                    <img src="your-profile-picture.jpg" alt="Profile Picture" onerror="this.style.display='none'; this.parentElement.innerHTML='G';">
+                </div>
+                <div class="username">Guest User</div>
+                <div class="user-type">Access Portfolio<span class="cursor"></span></div>
+            </div>
+            <button class="login-button" onclick="handleLogin()">
+                Enter Portfolio
+            </button>
+            <div class="loading" id="loading">
+                <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Track active particles to prevent memory leaks
+        let activeParticles = [];
+        
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            // Clean up old particles first
+            cleanupParticles();
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                const type = `type${Math.floor(Math.random() * 3) + 1}`;
+                particle.classList.add('particle', type);
+                particle.style.left = `${Math.random() * 100}vw`;
+                
+                const animationDelay = Math.random() * 10;
+                const animationDuration = 5 + Math.random() * 10;
+                
+                particle.style.animationDelay = `${animationDelay}s`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                
+                particlesContainer.appendChild(particle);
+                
+                // Track this particle
+                const particleData = {
+                    element: particle,
+                    createdAt: Date.now(),
+                    duration: (animationDelay + animationDuration) * 1000
+                };
+                activeParticles.push(particleData);
+                
+                // Auto-remove this particle after its animation completes
+                setTimeout(() => {
+                    if (particlesContainer.contains(particle)) {
+                        particlesContainer.removeChild(particle);
+                    }
+                    // Remove from tracking array
+                    activeParticles = activeParticles.filter(p => p.element !== particle);
+                }, particleData.duration);
+            }
+        }
+        
+        function cleanupParticles() {
+            const now = Date.now();
+            const particlesContainer = document.getElementById('particles');
+            
+            // Remove expired particles
+            activeParticles = activeParticles.filter(particleData => {
+                if (now - particleData.createdAt > particleData.duration) {
+                    if (particlesContainer.contains(particleData.element)) {
+                        particlesContainer.removeChild(particleData.element);
+                    }
+                    return false; // Remove from array
+                }
+                return true; // Keep in array
+            });
+        }
+        
+        // Initialize particles when page loads
+        createParticles();
+        
+        // Recreate particles periodically for continuous effect
+        setInterval(createParticles, 15000);
+        
+        // Clean up particles every 5 seconds to prevent memory leaks
+        setInterval(cleanupParticles, 5000);
+        
+        // Smooth login animation
+        function handleLogin() {
+            const button = document.querySelector('.login-button');
+            const loading = document.getElementById('loading');
+            const card = document.querySelector('.login-card');
+            
+            // Show loading state
+            button.textContent = 'Initializing...';
+            button.style.background = 'linear-gradient(135deg, #00ff88, #00cc6a)';
+            button.style.color = '#0a0a0a';
+            loading.style.display = 'block';
+            
+            // Simulate system boot sequence
+            setTimeout(() => {
+                button.textContent = 'Loading Portfolio...';
+            }, 1000);
+            
+            setTimeout(() => {
+                button.textContent = 'Welcome to portfolioOS';
+            }, 2000);
+            
+            // Fade out and redirect
+            setTimeout(() => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(-50px) scale(0.9)';
+                
+                setTimeout(() => {
+                    // Replace this with your actual portfolio page URL
+                    window.location.href = 'portfolio.html';
+                }, 500);
+            }, 3000);
+        }
+        
+        // Track mouse particles to prevent accumulation
+        let mouseParticles = [];
+        
+        // Add interactive particles on mouse move
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.05) { // Reduced frequency to 5% to prevent performance issues
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.left = e.clientX + 'px';
+                particle.style.top = e.clientY + 'px';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = '#00ff88';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '5';
+                particle.style.opacity = '0.6';
+                particle.style.transition = 'all 1s ease-out';
+                
+                document.body.appendChild(particle);
+                mouseParticles.push(particle);
+                
+                setTimeout(() => {
+                    particle.style.opacity = '0';
+                    particle.style.transform = 'scale(0)';
+                }, 100);
+                
+                setTimeout(() => {
+                    if (document.body.contains(particle)) {
+                        document.body.removeChild(particle);
+                    }
+                    // Remove from tracking array
+                    mouseParticles = mouseParticles.filter(p => p !== particle);
+                }, 1000);
+                
+                // Limit maximum mouse particles to prevent memory issues
+                if (mouseParticles.length > 20) {
+                    const oldParticle = mouseParticles.shift();
+                    if (document.body.contains(oldParticle)) {
+                        document.body.removeChild(oldParticle);
+                    }
+                }
+            }
+        });
+        
+        // Add glitch effect occasionally
+        setInterval(() => {
+            if (Math.random() < 0.1) { // 10% chance
+                const logo = document.querySelector('.logo h1');
+                logo.style.textShadow = '2px 0 #ff0000, -2px 0 #00ff00';
+                setTimeout(() => {
+                    logo.style.textShadow = 'none';
+                }, 150);
+            }
+        }, 5000);
+        
+        // Clean up on page unload to prevent memory leaks
+        window.addEventListener('beforeunload', () => {
+            activeParticles = [];
+            mouseParticles = [];
+        });
+    </script>
+</body>
+</html>

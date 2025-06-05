@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arya Sahu</title>
+    <link rel = "stylesheet" href = "styles.css">
+</head>
+<body>
+    <script src = "script.js"></script>
+    <!-- Particles Background -->
+    <div class="particles"></div>
+    
+    <!-- Boot Screen -->
+    <div class="screen boot-screen" id="bootScreen">
+        <div class="boot-text">
+            <div class="boot-line" style="animation-delay: 0s;">Initializing portfolioOS v2.1.0...</div>
+            <div class="boot-line ok" style="animation-delay: 0.3s;">Loading kernel modules</div>
+            <div class="boot-line ok" style="animation-delay: 0.6s;">Mounting filesystems</div>
+            <div class="boot-line ok" style="animation-delay: 0.9s;">Starting network services</div>
+            <div class="boot-line ok" style="animation-delay: 1.2s;">Loading user interface</div>
+            <div class="boot-line ok" style="animation-delay: 1.5s;">Initializing desktop environment</div>
+            <div class="boot-line" style="animation-delay: 1.8s; color: #00bfff;">Welcome to Arya Sahu's Portfolio System</div>
+            <div class="loading-bar" style="animation-delay: 2.1s;">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="screen login-screen hidden" id="loginScreen">
+        <div class="distro-logo"></div>
+        <div class="hostname">portfolioOS</div>
+        <div class="login-form">
+            <div class="user-select">
+                <div class="user-item" onclick="login()">
+                    <div class="user-avatar">G</div>
+                    <div class="user-info">
+                        <h3>Guest</h3>
+                        <p>Access Portfolio</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Screen -->
+    <div class="screen desktop-screen hidden" id="desktopScreen">
+        <!-- Top Panel -->
+        <div class="top-panel">
+            <div class="panel-left">
+                <div class="activities-button">Applications</div>
+            </div>
+            <div class="panel-right">
+                <div class="system-indicators">
+                    <div class="system-status">🖧 Network: Connected</div>
+                    <div class="system-status">🔊 Sound: On</div>
+                    <div class="system-status">🔋 Battery: 100%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openWindow('about')">
+                <div class="desktop-icon-image">ℹ️</div>
+                <span>About Me</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('projects')">
+                <div class="desktop-icon-image">📂</div>
+                <span>Projects</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('contact')">
+                <div class="desktop-icon-image">✉️</div>
+                <span>Contact</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('terminal')">
+                <div class="desktop-icon-image">🖥️</div>
+                <span>Terminal</span>
+            </div>
+        </div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="app-launcher">☰</div>
+            <div class="taskbar-apps">
+                <!-- Dynamic taskbar apps will be added here -->
+            </div>
+        </div>
+
+        <!-- Windows -->
+        <!-- About Window -->
+        <div class="window gui-window about-window" id="aboutWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('about')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">About Me</div>
+            </div>
+            <div class="gui-content portfolio-content">
+                <h1>Arya Sahu</h1>
+                <div class="subtitle">System Architect & Code Enthusiast</div>
+                <p>I'm a passionate developer with a love for Linux, open-source technologies, and creating elegant solutions to complex problems. My expertise spans system administration, software development, and DevOps practices.</p>
+                <p>With years of experience in building scalable applications and managing infrastructure, I enjoy exploring new technologies and contributing to the open-source community.</p>
+                <div class="skills">
+                    <span class="skill-tag">Linux</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Kubernetes</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Window -->
+        <div class="window gui-window projects-window" id="projectsWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('projects')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Projects</div>
+            </div>
+            <div class="gui-content portfolio-content">
+                <h1>Projects</h1>
+                <div class="subtitle">My Creations & Contributions</div>
+                <div class="project-item">
+                    <h3>PortfolioOS</h3>
+                    <p>A Linux-inspired portfolio interface built with HTML, CSS, and JavaScript, showcasing a responsive and interactive desktop environment with modern UI/UX principles.</p>
+                    <div class="skills">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">UI/UX</span>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <h3>System Monitor Dashboard</h3>
+                    <p>A real-time system monitoring tool with web interface, built using Python and WebSocket for live data streaming. Features CPU, memory, disk, and network monitoring.</p>
+                    <div class="skills">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">WebSocket</span>
+                        <span class="skill-tag">Chart.js</span>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <h3>DevOps Automation Suite</h3>
+                    <p>Complete CI/CD pipeline automation using Docker, Kubernetes, and Jenkins. Includes automated testing, deployment, and monitoring for microservices architecture.</p>
+                    <div class="skills">
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">Terraform</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Window -->
+        <div class="window gui-window contact-window" id="contactWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('contact')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Contact</div>
+            </div>
+            <div class="gui-content portfolio-content">
+                <h1>Contact Me</h1>
+                <div class="subtitle">Get in Touch</div>
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <strong>Email</strong><br>
+                        arya.sahu@example.com
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">💻</div>
+                    <div>
+                        <strong>GitHub</strong><br>
+                        github.com/aryasahu
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">💼</div>
+                    <div>
+                        <strong>LinkedIn</strong><br>
+                        linkedin.com/in/aryasahu
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🐦</div>
+                    <div>
+                        <strong>Twitter</strong><br>
+                        @aryasahu_dev
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Window -->
+        <div class="window terminal-window" id="terminalWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('terminal')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">Terminal</div>
+            </div>
+            <div class="terminal-content">
+                <div class="terminal-line">
+                    <span class="prompt">user@portfolioOS:~$</span>
+                    <span class="command">whoami</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="output">guest</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">user@portfolioOS:~$</span>
+                    <input type="text" class="command" id="terminalInput" onkeypress="handleTerminalInput(event)" placeholder="Type 'help' for available commands">
+                    <span class="cursor">_</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Context Menu -->
+        <div class="context-menu" id="contextMenu">
+            <div class="context-menu-item" onclick="openWindow('about')">
+                <span>ℹ️ Open About</span>
+            </div>
+            <div class="context-menu-item" onclick="openWindow('projects')">
+                <span>📂 Open Projects</span>
+            </div>
+            <div class="context-menu-item" onclick="openWindow('contact')">
+                <span>✉️ Open Contact</span>
+            </div>
+            <div class="context-menu-item" onclick="openWindow('terminal')">
+                <span>🖥️ Open Terminal</span>
+            </div>
+            <div class="context-menu-separator"></div>
+            <div class="context-menu-item" onclick="logout()">
+                <span>🚪 Logout</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
