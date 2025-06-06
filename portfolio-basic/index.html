@@ -6,6 +6,7 @@
     <title>Linux Portfolio Desktop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,7 +21,7 @@
             /* Replace with your own wallpaper URL */
             background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
         }
 
         /* Top Panel */
@@ -29,7 +30,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 40px; /* GNOME default height */
+            height: 40px;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             display: flex;
@@ -38,7 +39,7 @@
             padding: 0 16px;
             z-index: 100;
             color: white;
-            font-size: 14px; /* Slightly larger for GNOME look */
+            font-size: 14px;
             font-weight: 400;
         }
 
@@ -55,22 +56,22 @@
             transition: all 0.3s ease;
             font-weight: 500;
             font-size: 14px;
-            color: white; /* Plain white text */
-            background: none; /* No gradient */
+            color: white;
+            background: none;
         }
 
         .activities-btn:hover {
-            background: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .datetime {
             font-weight: 500;
-            color: white; /* White to match GNOME */
+            color: white;
         }
 
         .panel-right {
             display: flex;
-            gap: 16px; /* More spacing like GNOME */
+            gap: 16px;
             align-items: center;
         }
 
@@ -82,7 +83,7 @@
         }
 
         .panel-indicator:hover {
-            color: rgba(255, 255, 255, 1); /* Full opacity on hover */
+            color: rgba(255, 255, 255, 1);
         }
 
         .user-menu {
@@ -104,8 +105,8 @@
             display: flex;
             flex-direction: column;
             padding: 60px 40px 20px;
-            opacity: 0; /* Hidden by default */
-            visibility: hidden; /* Hidden by default */
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.3s ease;
         }
 
@@ -183,11 +184,11 @@
 
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr); /* Fixed 6 columns like GNOME */
-            gap: 40px; /* Matches spacing in screenshot */
+            grid-template-columns: repeat(6, 1fr);
+            gap: 40px;
             padding: 20px 0;
-            justify-items: center; /* Center items within their grid cell */
-            align-items: start; /* Align items to the top */
+            justify-items: center;
+            align-items: start;
         }
 
         .grid-app {
@@ -200,7 +201,7 @@
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 100px; /* Fixed width for consistency */
+            width: 100px;
         }
 
         .grid-app:hover {
@@ -265,7 +266,7 @@
         .about-app { background: #e95420; }
         .projects-app { background: #77216f; }
         .contact-app { background: #5e2750; }
-        .grid-icon { background: transparent; } /* No background for grid icon */
+        .grid-icon { background: transparent; }
 
         /* Dock */
         .dock {
@@ -303,7 +304,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* Green Status Dot for Active Apps */
         .dock-icon.active::before {
             content: '';
             position: absolute;
@@ -312,28 +312,22 @@
             transform: translateY(-50%);
             width: 8px;
             height: 8px;
-            background: #00ff00; /* Green dot */
+            background: #00ff00;
             border-radius: 50%;
-            box-shadow: 0 0 8px rgba(0, 255, 0, 0.5); /* Subtle glow */
-        }
-
-        /* Style for Grid Icon to better match GNOME */
-        .grid-icon {
-            background: transparent;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
         }
 
         .grid-icon i {
-            font-size: 28px; /* Slightly larger for better visibility */
-            color: #ffffff; /* Pure white for clarity */
-            opacity: 0.9; /* Slight transparency like GNOME */
+            font-size: 28px;
+            color: #ffffff;
+            opacity: 0.9;
         }
 
         .grid-icon:hover {
-            background: rgba(255, 255, 255, 0.2); /* Subtle background on hover */
+            background: rgba(255, 255, 255, 0.2);
             transform: scale(1.1);
         }
 
-        /* Separator for Grid Icon */
         .dock-separator {
             width: 40px;
             height: 2px;
@@ -341,10 +335,152 @@
             margin: 5px auto;
         }
 
+        /* Terminal Window Overlay */
+        .terminal-window {
+            position: fixed;
+            width: 600px;
+            height: 400px;
+            background: #1e2527; /* GNOME Terminal dark background */
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 200;
+            font-family: 'Fira Code', monospace;
+            color: #e0e0e0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .terminal-window.active {
+            display: flex;
+            animation: windowOpen 0.3s ease forwards;
+        }
+
+        @keyframes windowOpen {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -55%) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .terminal-header {
+            height: 28px;
+            background: #3c3c3c; /* GNOME window header color */
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+            cursor: move; /* Make header draggable */
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .window-control.close { background: #ed4747; }
+        .window-control.minimize { background: #f5b941; }
+        .window-control.maximize { background: #37c837; }
+
+        .window-control:hover {
+            transform: scale(1.1);
+        }
+
+        .window-title {
+            font-size: 12px;
+            color: #e0e0e0;
+            user-select: none;
+        }
+
+        .terminal-body {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background: #1e2527;
+            scrollbar-width: thin;
+            scrollbar-color: #e95420 #333;
+        }
+
+        .terminal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .terminal-body::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: #e95420;
+            border-radius: 3px;
+        }
+
+        .output-line {
+            margin-bottom: 6px;
+            white-space: pre-wrap;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .prompt {
+            color: #e95420; /* Ubuntu orange */
+        }
+
+        .command {
+            color: #ffffff;
+        }
+
+        .output {
+            color: #d0d0d0;
+        }
+
+        .ascii-art {
+            color: #77216f; /* Ubuntu purple */
+            font-size: 11px;
+        }
+
+        .terminal-input {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            background: #2a2f31;
+            border-top: 1px solid #3c3c3c;
+        }
+
+        .input-prompt {
+            color: #e95420;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+        .terminal-window input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            outline: none;
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .app-grid {
-                grid-template-columns: repeat(5, 1fr); /* 5 columns */
+                grid-template-columns: repeat(5, 1fr);
                 gap: 35px;
             }
 
@@ -356,6 +492,11 @@
                 width: 55px;
                 height: 55px;
                 font-size: 26px;
+            }
+
+            .terminal-window {
+                width: 80%;
+                height: 60%;
             }
         }
 
@@ -375,7 +516,7 @@
             }
 
             .app-grid {
-                grid-template-columns: repeat(4, 1fr); /* 4 columns */
+                grid-template-columns: repeat(4, 1fr);
                 gap: 30px;
             }
 
@@ -423,6 +564,19 @@
             .grid-icon i {
                 font-size: 24px;
             }
+
+            .terminal-window {
+                width: 90%;
+                height: 70%;
+            }
+
+            .output-line, .terminal-window input, .input-prompt {
+                font-size: 12px;
+            }
+
+            .ascii-art {
+                font-size: 10px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -438,7 +592,7 @@
             }
 
             .app-grid {
-                grid-template-columns: repeat(3, 1fr); /* 3 columns */
+                grid-template-columns: repeat(3, 1fr);
                 gap: 20px;
             }
 
@@ -461,7 +615,6 @@
                 padding: 50px 20px 10px;
             }
 
-            /* Move dock to bottom */
             .dock {
                 left: 50%;
                 top: auto;
@@ -493,11 +646,29 @@
             .grid-icon i {
                 font-size: 20px;
             }
+
+            .terminal-window {
+                width: 95%;
+                height: 75%;
+            }
+
+            .terminal-header {
+                height: 25px;
+            }
+
+            .window-control {
+                width: 10px;
+                height: 10px;
+            }
+
+            .window-title {
+                font-size: 11px;
+            }
         }
 
         @media (max-width: 320px) {
             .app-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 columns */
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
 
@@ -549,6 +720,14 @@
 
             .grid-icon i {
                 font-size: 18px;
+            }
+
+            .output-line, .terminal-window input, .input-prompt {
+                font-size: 11px;
+            }
+
+            .ascii-art {
+                font-size: 9px;
             }
         }
     </style>
@@ -677,12 +856,28 @@
         <a href="#" class="dock-icon portfolio-app" data-app="portfolio" onclick="openApp('portfolio')">
             <i class="fas fa-briefcase"></i>
         </a>
-        <!-- Separator before grid icon -->
         <div class="dock-separator"></div>
-        <!-- Grid Icon to toggle app grid -->
         <a href="#" class="dock-icon grid-icon" onclick="toggleAppGrid()">
             <i class="fas fa-th"></i>
         </a>
+    </div>
+
+    <!-- Terminal Window Template (Hidden by Default) -->
+    <div class="terminal-window" id="terminal-window-template">
+        <div class="terminal-header">
+            <div class="window-controls">
+                <div class="window-control close" onclick="closeWindow(this)"></div>
+                <div class="window-control minimize" onclick="minimizeWindow(this)"></div>
+                <div class="window-control maximize" onclick="maximizeWindow(this)"></div>
+            </div>
+            <div class="window-title">Terminal Portfolio</div>
+            <div style="width: 36px;"></div> <!-- Spacer for symmetry -->
+        </div>
+        <div class="terminal-body"></div>
+        <div class="terminal-input">
+            <span class="input-prompt">kirbynuggets@portfolio:~$</span>
+            <input type="text" class="command-input" autocomplete="off">
+        </div>
     </div>
 
     <script>
@@ -692,9 +887,7 @@
             const options = { weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true };
             document.getElementById('datetime').textContent = now.toLocaleString('en-US', options);
         }
-        // Set initial time immediately on page load
         updateDateTime();
-        // Update every second
         setInterval(updateDateTime, 1000);
 
         // Toggle application grid
@@ -752,7 +945,10 @@
             });
         });
 
-        // Open app and toggle active state
+        // Window Management
+        let windowCounter = 0;
+        const openWindows = {};
+
         function openApp(appName) {
             // Remove active class from all dock icons
             const dockIcons = document.querySelectorAll('.dock-icon');
@@ -768,22 +964,232 @@
                 clickedIcon.classList.add('active');
             }
 
-            // Redirect to the appropriate page
+            // For now, only handle the terminal app as an overlay
             if (appName === 'terminal') {
-                window.location.href = '/terminal-portfolio.html';
-            } else if (appName === 'code') {
-                window.location.href = '/code-projects.html';
-            } else if (appName === 'portfolio') {
-                window.location.href = '/portfolio.html';
-            } else if (appName === 'about') {
-                window.location.href = '/about.html';
-            } else if (appName === 'projects') {
-                window.location.href = '/projects.html';
-            } else if (appName === 'contact') {
-                window.location.href = '/contact.html';
-            } else if (appName === 'settings') {
-                window.location.href = '/settings.html';
+                openTerminalWindow();
+            } else {
+                // For other apps, you can still navigate to a new page
+                if (appName === 'code') {
+                    window.location.href = '/code-projects.html';
+                } else if (appName === 'portfolio') {
+                    window.location.href = '/portfolio.html';
+                } else if (appName === 'about') {
+                    window.location.href = '/about.html';
+                } else if (appName === 'projects') {
+                    window.location.href = '/projects.html';
+                } else if (appName === 'contact') {
+                    window.location.href = '/contact.html';
+                } else if (appName === 'settings') {
+                    window.location.href = '/settings.html';
+                }
             }
+        }
+
+        function openTerminalWindow() {
+            windowCounter++;
+            const windowId = `terminal-${windowCounter}`;
+
+            // Clone the terminal window template
+            const template = document.getElementById('terminal-window-template');
+            const newWindow = template.cloneNode(true);
+            newWindow.id = windowId;
+            newWindow.classList.add('active');
+            document.body.appendChild(newWindow);
+
+            // Initialize terminal functionality
+            initializeTerminal(newWindow);
+
+            // Make the window draggable
+            makeDraggable(newWindow);
+
+            // Store the window reference
+            openWindows[windowId] = newWindow;
+
+            // Focus the input
+            newWindow.querySelector('.command-input').focus();
+        }
+
+        function initializeTerminal(windowElement) {
+            const terminalBody = windowElement.querySelector('.terminal-body');
+            const commandInput = windowElement.querySelector('.command-input');
+
+            // Display welcome message
+            const welcomeMessage = `
+<span class="ascii-art">
+   _____       _           
+  / ____|     (_)          
+ | |     __ _ _ _ __   ___ 
+ | |    / _\` | | '_ \\ / _ \\
+ | |___| (_| | | | | |  __/
+  \\_____\\__,_|_|_| |_|___|
+  
+ Welcome to My Terminal Portfolio!
+</span>
+<span class="output">Type <span class="command">help</span> to see available commands.</span>
+`;
+            typeOutput(terminalBody, welcomeMessage);
+
+            // Portfolio Data
+            const portfolioData = {
+                about: "I'm a passionate developer with expertise in web technologies. I love building creative and interactive projects, often inspired by Linux and open-source culture.",
+                skills: "Languages: JavaScript, Python, HTML, CSS\nFrameworks: React, Node.js\nTools: Git, Docker, Bash",
+                projects: "1. Terminal Portfolio - A Linux-inspired portfolio (you’re using it!)\n2. Task Manager CLI - A command-line task manager built with Python\n3. Portfolio Desktop - A GNOME-style portfolio desktop",
+                contact: "Email: yourname@example.com\nGitHub: github.com/your-username\nLinkedIn: linkedin.com/in/your-profile"
+            };
+
+            // Available Commands
+            const commands = {
+                help: () => {
+                    const helpText = `
+<span class="output">Available Commands:
+- <span class="command">whoami</span>: Display my name
+- <span class="command">ls</span>: List portfolio sections
+- <span class="command">cat [section].txt</span>: View section (e.g., cat about.txt)
+- <span class="command">clear</span>: Clear the terminal
+- <span class="command">help</span>: Show this help message
+- <span class="command">exit</span>: Close the terminal
+</span>`;
+                    typeOutput(terminalBody, helpText);
+                },
+                whoami: () => {
+                    typeOutput(terminalBody, '<span class="output">yourname</span>'); // Replace with your name
+                },
+                ls: () => {
+                    typeOutput(terminalBody, '<span class="output">about.txt  skills.txt  projects.txt  contact.txt</span>');
+                },
+                cat: (args) => {
+                    const file = args[0];
+                    if (!file || !file.endsWith('.txt')) {
+                        typeOutput(terminalBody, '<span class="output">cat: Please specify a file (e.g., cat about.txt)</span>');
+                        return;
+                    }
+                    const section = file.replace('.txt', '').toLowerCase();
+                    if (portfolioData[section]) {
+                        typeOutput(terminalBody, `<span class="output">${portfolioData[section]}</span>`);
+                    } else {
+                        typeOutput(terminalBody, `<span class="output">cat: ${file}: No such file</span>`);
+                    }
+                },
+                clear: () => {
+                    terminalBody.innerHTML = '';
+                },
+                exit: () => {
+                    closeWindow(commandInput.closest('.window-controls'));
+                }
+            };
+
+            // Handle Command Input
+            commandInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const input = commandInput.value.trim().toLowerCase();
+                    const [cmd, ...args] = input.split(' ');
+
+                    // Display the command
+                    typeOutput(terminalBody, `<span class="prompt">kirbynuggets@portfolio:~$</span> <span class="command">${input}</span>`);
+
+                    // Execute the command
+                    if (commands[cmd]) {
+                        commands[cmd](args);
+                    } else if (input) {
+                        typeOutput(terminalBody, `<span class="output">Command not found: ${cmd}. Type <span class="command">help</span> for available commands.</span>`);
+                    }
+
+                    // Clear input
+                    commandInput.value = '';
+                    terminalBody.scrollTop = terminalBody.scrollHeight;
+                }
+            });
+        }
+
+        function typeOutput(terminalBody, text) {
+            const div = document.createElement('div');
+            div.className = 'output-line';
+            div.innerHTML = text;
+            terminalBody.appendChild(div);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        function closeWindow(element) {
+            const windowElement = element.closest('.terminal-window');
+            windowElement.remove();
+            const windowId = windowElement.id;
+            delete openWindows[windowId];
+
+            // Remove active state from dock icon if no terminal windows are open
+            if (!document.querySelector('.terminal-window.active')) {
+                const terminalIcon = document.querySelector('.dock-icon.terminal-app');
+                terminalIcon.classList.remove('active');
+            }
+        }
+
+        function minimizeWindow(element) {
+            const windowElement = element.closest('.terminal-window');
+            windowElement.style.display = 'none';
+        }
+
+        function maximizeWindow(element) {
+            const windowElement = element.closest('.terminal-window');
+            if (windowElement.classList.contains('maximized')) {
+                windowElement.classList.remove('maximized');
+                windowElement.style.width = '600px';
+                windowElement.style.height = '400px';
+                windowElement.style.top = '50%';
+                windowElement.style.left = '50%';
+                windowElement.style.transform = 'translate(-50%, -50%)';
+            } else {
+                windowElement.classList.add('maximized');
+                windowElement.style.width = '90%';
+                windowElement.style.height = '80%';
+                windowElement.style.top = '50%';
+                windowElement.style.left = '50%';
+                windowElement.style.transform = 'translate(-50%, -50%)';
+            }
+        }
+
+        function makeDraggable(element) {
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+
+            const header = element.querySelector('.terminal-header');
+            header.addEventListener('mousedown', startDragging);
+
+            function startDragging(e) {
+                if (e.target.classList.contains('window-control')) return; // Ignore clicks on window controls
+                
+                // Get current position when starting to drag
+                const rect = element.getBoundingClientRect();
+                currentX = rect.left;
+                currentY = rect.top;
+                
+                initialX = e.clientX - currentX;
+                initialY = e.clientY - currentY;
+                isDragging = true;
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', stopDragging);
+            }
+
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                    element.style.left = currentX + 'px';
+                    element.style.top = currentY + 'px';
+                    element.style.transform = 'none';
+                }
+            }
+
+            function stopDragging() {
+                isDragging = false;
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('mouseup', stopDragging);
+            }
+
+            // Don't set initial position here - let CSS handle centering
+            // The transform: translate(-50%, -50%) in CSS will center it properly
         }
 
         // Keyboard shortcuts
