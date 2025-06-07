@@ -18,13 +18,11 @@
             font-family: 'Ubuntu', sans-serif;
             height: 100vh;
             overflow: hidden;
-            /* Replace with your own wallpaper URL */
             background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             position: relative;
             transition: all 0.5s ease;
         }
 
-        /* Top Panel */
         .top-panel {
             position: absolute;
             top: 0;
@@ -92,7 +90,6 @@
             gap: 4px;
         }
 
-        /* Application Grid Overlay */
         .app-grid-overlay {
             position: fixed;
             top: 0;
@@ -232,7 +229,6 @@
             line-height: 1.2;
         }
 
-        /* Pagination Dots */
         .pagination-dots {
             position: absolute;
             bottom: 20px;
@@ -256,7 +252,6 @@
             height: 12px;
         }
 
-        /* App-specific backgrounds */
         .terminal-app { background: #2d3748; }
         .code-app { background: #007acc; }
         .github-app { background: #333; }
@@ -268,7 +263,6 @@
         .contact-app { background: #5e2750; }
         .grid-icon { background: transparent; }
 
-        /* Dock */
         .dock {
             position: fixed;
             left: 10px;
@@ -335,12 +329,11 @@
             margin: 5px auto;
         }
 
-        /* Terminal Window Overlay */
         .terminal-window {
             position: fixed;
             width: 600px;
             height: 400px;
-            background: #1e2527; /* GNOME Terminal dark background */
+            background: #1e2527;
             border-radius: 5px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: none;
@@ -371,14 +364,14 @@
 
         .terminal-header {
             height: 28px;
-            background: #3c3c3c; /* GNOME window header color */
+            background: #3c3c3c;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 8px;
-            cursor: move; /* Make header draggable */
+            cursor: move;
         }
 
         .window-controls {
@@ -393,9 +386,20 @@
             transition: all 0.3s ease;
         }
 
-        .window-control.close { background: #ed4747; }
-        .window-control.minimize { background: #f5b941; }
-        .window-control.maximize { background: #37c837; }
+        .window-control.close {
+            background: #ed4747;
+            cursor: pointer;
+        }
+
+        .window-control.minimize {
+            background: #f5b941;
+            cursor: pointer;
+        }
+
+        .window-control.maximize {
+            background: #37c837;
+            cursor: pointer;
+        }
 
         .window-control:hover {
             transform: scale(1.1);
@@ -437,7 +441,7 @@
         }
 
         .prompt {
-            color: #e95420; /* Ubuntu orange */
+            color: #e95420;
         }
 
         .command {
@@ -449,7 +453,7 @@
         }
 
         .ascii-art {
-            color: #77216f; /* Ubuntu purple */
+            color: #77216f;
             font-size: 11px;
         }
 
@@ -477,7 +481,6 @@
             outline: none;
         }
 
-        /* Responsive Design */
         @media (max-width: 1024px) {
             .app-grid {
                 grid-template-columns: repeat(5, 1fr);
@@ -685,7 +688,7 @@
 
             .grid-app-name {
                 font-size: 11px;
-            }
+           »
 
             .app-grid-overlay {
                 padding: 40px 10px 10px;
@@ -733,7 +736,6 @@
     </style>
 </head>
 <body>
-    <!-- Top Panel -->
     <div class="top-panel">
         <div class="panel-left">
             <div class="activities-btn" onclick="toggleAppGrid()">Activities</div>
@@ -750,7 +752,6 @@
         </div>
     </div>
 
-    <!-- Application Grid Overlay -->
     <div class="app-grid-overlay" id="appGridOverlay">
         <div class="app-grid-header">
             <input type="text" class="app-search" placeholder="Type to search..." id="appSearch">
@@ -811,7 +812,7 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="grid-app-name">About Me</div>
-                </div>
+                    </div>
 
                 <div class="grid-app" data-category="development" onclick="openApp('projects')">
                     <div class="grid-app-icon projects-app">
@@ -836,7 +837,6 @@
         </div>
     </div>
 
-    <!-- Dock -->
     <div class="dock">
         <a href="#" class="dock-icon terminal-app" data-app="terminal" onclick="openApp('terminal')">
             <i class="fas fa-terminal"></i>
@@ -862,7 +862,6 @@
         </a>
     </div>
 
-    <!-- Terminal Window Template (Hidden by Default) -->
     <div class="terminal-window" id="terminal-window-template">
         <div class="terminal-header">
             <div class="window-controls">
@@ -871,7 +870,7 @@
                 <div class="window-control maximize" onclick="maximizeWindow(this)"></div>
             </div>
             <div class="window-title">Terminal Portfolio</div>
-            <div style="width: 36px;"></div> <!-- Spacer for symmetry -->
+            <div style="width: 36px;"></div>
         </div>
         <div class="terminal-body"></div>
         <div class="terminal-input">
@@ -881,7 +880,6 @@
     </div>
 
     <script>
-        // Update datetime
         function updateDateTime() {
             const now = new Date();
             const options = { weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true };
@@ -890,7 +888,6 @@
         updateDateTime();
         setInterval(updateDateTime, 1000);
 
-        // Toggle application grid
         function toggleAppGrid() {
             const appGridOverlay = document.getElementById('appGridOverlay');
             appGridOverlay.classList.toggle('active');
@@ -899,7 +896,6 @@
             }
         }
 
-        // Category filtering
         const categoryButtons = document.querySelectorAll('.category-btn');
         const gridApps = document.querySelectorAll('.grid-app');
 
@@ -928,7 +924,6 @@
             });
         });
 
-        // Search functionality
         document.getElementById('appSearch').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             gridApps.forEach(app => {
@@ -945,12 +940,10 @@
             });
         });
 
-        // Window Management
         let windowCounter = 0;
         const openWindows = {};
 
         function openApp(appName) {
-            // Remove active class from all dock icons
             const dockIcons = document.querySelectorAll('.dock-icon');
             dockIcons.forEach(icon => {
                 if (icon.getAttribute('data-app')) {
@@ -958,17 +951,14 @@
                 }
             });
 
-            // Add active class to the clicked app
             const clickedIcon = document.querySelector(`.dock-icon[data-app="${appName}"]`);
             if (clickedIcon) {
                 clickedIcon.classList.add('active');
             }
 
-            // For now, only handle the terminal app as an overlay
             if (appName === 'terminal') {
                 openTerminalWindow();
             } else {
-                // For other apps, you can still navigate to a new page
                 if (appName === 'code') {
                     window.location.href = '/code-projects.html';
                 } else if (appName === 'portfolio') {
@@ -989,23 +979,15 @@
             windowCounter++;
             const windowId = `terminal-${windowCounter}`;
 
-            // Clone the terminal window template
             const template = document.getElementById('terminal-window-template');
             const newWindow = template.cloneNode(true);
             newWindow.id = windowId;
             newWindow.classList.add('active');
             document.body.appendChild(newWindow);
 
-            // Initialize terminal functionality
             initializeTerminal(newWindow);
-
-            // Make the window draggable
             makeDraggable(newWindow);
-
-            // Store the window reference
             openWindows[windowId] = newWindow;
-
-            // Focus the input
             newWindow.querySelector('.command-input').focus();
         }
 
@@ -1013,23 +995,22 @@
             const terminalBody = windowElement.querySelector('.terminal-body');
             const commandInput = windowElement.querySelector('.command-input');
 
-            // Display welcome message
             const welcomeMessage = `
+
 <span class="ascii-art">
-   _____       _           
-  / ____|     (_)          
- | |     __ _ _ _ __   ___ 
- | |    / _\` | | '_ \\ / _ \\
- | |___| (_| | | | | |  __/
-  \\_____\\__,_|_|_| |_|___|
-  
+    _    ____  __   __    _    
+   / \\  |  _ \\ \\ \\ / /   / \\   
+  / _ \\ | |_) | \\ V /   / _ \\  
+ / ___ \\|  _ <   | |   / ___ \\ 
+/_/   \\_\\_| \\_\\  |_|  /_/   \\_\\
+                              
  Welcome to My Terminal Portfolio!
 </span>
 <span class="output">Type <span class="command">help</span> to see available commands.</span>
 `;
+
             typeOutput(terminalBody, welcomeMessage);
 
-            // Portfolio Data
             const portfolioData = {
                 about: "I'm a passionate developer with expertise in web technologies. I love building creative and interactive projects, often inspired by Linux and open-source culture.",
                 skills: "Languages: JavaScript, Python, HTML, CSS\nFrameworks: React, Node.js\nTools: Git, Docker, Bash",
@@ -1037,7 +1018,6 @@
                 contact: "Email: yourname@example.com\nGitHub: github.com/your-username\nLinkedIn: linkedin.com/in/your-profile"
             };
 
-            // Available Commands
             const commands = {
                 help: () => {
                     const helpText = `
@@ -1052,7 +1032,7 @@
                     typeOutput(terminalBody, helpText);
                 },
                 whoami: () => {
-                    typeOutput(terminalBody, '<span class="output">yourname</span>'); // Replace with your name
+                    typeOutput(terminalBody, '<span class="output">Arya</span>');
                 },
                 ls: () => {
                     typeOutput(terminalBody, '<span class="output">about.txt  skills.txt  projects.txt  contact.txt</span>');
@@ -1078,23 +1058,19 @@
                 }
             };
 
-            // Handle Command Input
             commandInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     const input = commandInput.value.trim().toLowerCase();
                     const [cmd, ...args] = input.split(' ');
 
-                    // Display the command
                     typeOutput(terminalBody, `<span class="prompt">kirbynuggets@portfolio:~$</span> <span class="command">${input}</span>`);
 
-                    // Execute the command
                     if (commands[cmd]) {
                         commands[cmd](args);
                     } else if (input) {
                         typeOutput(terminalBody, `<span class="output">Command not found: ${cmd}. Type <span class="command">help</span> for available commands.</span>`);
                     }
 
-                    // Clear input
                     commandInput.value = '';
                     terminalBody.scrollTop = terminalBody.scrollHeight;
                 }
@@ -1115,7 +1091,6 @@
             const windowId = windowElement.id;
             delete openWindows[windowId];
 
-            // Remove active state from dock icon if no terminal windows are open
             if (!document.querySelector('.terminal-window.active')) {
                 const terminalIcon = document.querySelector('.dock-icon.terminal-app');
                 terminalIcon.classList.remove('active');
@@ -1157,9 +1132,8 @@
             header.addEventListener('mousedown', startDragging);
 
             function startDragging(e) {
-                if (e.target.classList.contains('window-control')) return; // Ignore clicks on window controls
+                if (e.target.classList.contains('window-control')) return;
                 
-                // Get current position when starting to drag
                 const rect = element.getBoundingClientRect();
                 currentX = rect.left;
                 currentY = rect.top;
@@ -1187,12 +1161,8 @@
                 document.removeEventListener('mousemove', drag);
                 document.removeEventListener('mouseup', stopDragging);
             }
-
-            // Don't set initial position here - let CSS handle centering
-            // The transform: translate(-50%, -50%) in CSS will center it properly
         }
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', function(event) {
             if ((event.ctrlKey || event.metaKey) && event.code === 'Space') {
                 toggleAppGrid();
@@ -1205,7 +1175,6 @@
             }
         });
 
-        // Close grid when clicking outside
         document.getElementById('appGridOverlay').addEventListener('click', function(event) {
             if (event.target === this) {
                 toggleAppGrid();
