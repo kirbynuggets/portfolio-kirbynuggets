@@ -1,0 +1,21 @@
+src/
+├── components/
+│   ├── Desktop/
+│   │   ├── Desktop.tsx
+│   │   ├── Wallpaper.tsx
+│   │   ├── TopPanel.tsx
+│   │   └── Dock.tsx
+│   ├── Applications/
+│   │   ├── Terminal/
+│   │   ├── FileManager/
+│   │   ├── VSCode/
+│   │   ├── Browser/
+│   │   └── Settings/
+│   ├── Windows/
+│   │   ├── Window.tsx
+│   │   └── WindowManager.tsx
+│   └── UI/
+├── hooks/
+├── stores/
+├── utils/
+└── styles/
