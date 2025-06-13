@@ -1,0 +1,155 @@
+/* src/components/Desktop/Wallpaper.css */
+
+.wallpaper-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.wallpaper-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.wallpaper-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.wallpaper-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: white;
+}
+
+.controls-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.control-button {
+  padding: 0.25rem;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.control-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.control-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.wallpaper-info {
+  text-align: center;
+}
+
+.wallpaper-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.wallpaper-counter {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.wallpaper-thumbnails {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.thumbnail-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.thumbnail-dot:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.thumbnail-dot.active {
+  background-color: white;
+}
+
+.linux-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(59, 130, 246, 0.05) 0%,
+    transparent 50%,
+    rgba(34, 197, 94, 0.05) 100%
+  );
+  background-size: 200% 200%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .wallpaper-controls {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .controls-content {
+    gap: 0.5rem;
+  }
+  
+  .wallpaper-name {
+    font-size: 0.625rem;
+  }
+  
+  .wallpaper-counter {
+    font-size: 0.625rem;
+  }
+  
+  .thumbnail-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+}

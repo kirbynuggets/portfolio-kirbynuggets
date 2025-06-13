@@ -1,0 +1,65 @@
+.top-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #2E3440; /* Nordic gray */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 50;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.panel-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.activities-button {
+  color: #D8DEE9; /* Light Nordic gray */
+  padding: 5px 12px;
+  border-radius: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.activities-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.panel-center {
+  flex: 1;
+  text-align: center;
+}
+
+.panel-title {
+  color: #D8DEE9;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.panel-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status-icon {
+  width: 18px;
+  height: 18px;
+  color: #D8DEE9;
+}
+
+.panel-time {
+  color: #D8DEE9;
+  font-weight: 500;
+  font-size: 14px;
+}

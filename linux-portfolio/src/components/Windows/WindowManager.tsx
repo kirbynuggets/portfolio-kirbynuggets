@@ -1,5 +1,5 @@
-// src/components/Windows/WindowManager.tsx
 import { useWindowStore } from '../../stores/windowStore';
+import { Window } from './Window'; // ← MISSING IMPORT
 
 export const WindowManager = () => {
   const { windows, activeWindow, closeWindow, minimizeWindow, maximizeWindow, focusWindow } = useWindowStore();
