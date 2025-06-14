@@ -1,4 +1,3 @@
-// src/components/Windows/WindowManager.jsx
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWindowStore } from '../../stores/windowStore';
 import { Window } from './Window';

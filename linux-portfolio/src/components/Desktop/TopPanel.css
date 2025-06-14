@@ -1,578 +1,80 @@
-/* TopPanel.css - Modern Linux Desktop Style */
 .top-panel {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 48px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  height: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
-  z-index: 1000;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  transition: all 0.3s ease;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 100;
+  color: white;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Ubuntu', sans-serif;
 }
 
-.top-panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 50%, 
-    rgba(255, 255, 255, 0.02) 100%
-  );
-  pointer-events: none;
-}
-
-.panel-background {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg,
-    rgba(59, 130, 246, 0.05) 0%,
-    rgba(139, 92, 246, 0.05) 50%,
-    rgba(236, 72, 153, 0.05) 100%
-  );
-  opacity: 0.8;
-}
-
-.panel-blur {
-  position: absolute;
-  inset: 0;
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-}
-
-.panel-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    transparent 100%
-  );
-}
-
-/* Left Section - Activities */
 .panel-left {
   display: flex;
-  align-items: center;
   gap: 20px;
-  position: relative;
-  z-index: 2;
+  align-items: center;
 }
 
-.activities-button {
-  position: relative;
-  color: rgba(255, 255, 255, 0.9);
-  padding: 8px 16px;
+.activities-btn {
+  padding: 4px 12px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-}
-
-.activities-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    transparent 50%, 
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.activities-button:hover::before {
-  opacity: 1;
-}
-
-.activities-button:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.activities-button.active {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: white;
-  box-shadow: 
-    0 8px 32px rgba(79, 172, 254, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.activities-indicator {
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 2px;
-  background: linear-gradient(90deg, #4facfe, #00f2fe);
-  border-radius: 1px;
-  box-shadow: 0 0 8px rgba(79, 172, 254, 0.6);
-}
-
-/* Activities Menu */
-.activities-menu {
-  position: absolute;
-  top: 60px;
-  left: 0;
-  min-width: 280px;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-}
-
-.menu-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.menu-header h3 {
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.menu-close {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 6px;
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  font-size: 18px;
-  transition: all 0.2s ease;
-}
-
-.menu-close:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
-.menu-items {
-  padding: 8px;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-bottom: 2px;
-}
-
-.menu-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(4px);
-}
-
-.menu-icon {
-  width: 18px;
-  height: 18px;
-  color: rgba(255, 255, 255, 0.8);
-  flex-shrink: 0;
-}
-
-.menu-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.menu-label {
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.menu-shortcut {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* Center Section - Clock */
-.panel-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-}
-
-.clock-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.clock-container:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: scale(1.02);
-}
-
-.clock-time {
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 15px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.2;
-}
-
-.clock-date {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 11px;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1;
+  font-size: 14px;
+  color: white;
+  background: none;
 }
 
-/* Right Section - System Indicators */
+.activities-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.datetime {
+  font-weight: 500;
+  color: white;
+}
+
 .panel-right {
   display: flex;
+  gap: 16px;
   align-items: center;
-  position: relative;
-  z-index: 2;
 }
 
-.system-indicators {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.indicator {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 8px;
-  border-radius: 8px;
+.panel-indicator {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.indicator:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.05);
-}
-
-.indicator-icon {
-  width: 16px;
-  height: 16px;
-  color: rgba(255, 255, 255, 0.8);
-  transition: color 0.2s ease;
-}
-
-/* Security Indicator */
-.security-indicator .indicator-icon {
-  color: #10b981;
-  filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.4));
-}
-
-/* Bluetooth Indicator */
-.bluetooth-indicator .indicator-icon {
-  transition: all 0.2s ease;
-}
-
-.bluetooth-indicator:hover .indicator-icon {
-  color: #3b82f6;
-  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.4));
-}
-
-/* Volume Indicator */
-.volume-indicator {
-  gap: 8px;
-}
-
-.volume-bar {
-  width: 32px;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.volume-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #10b981, #34d399);
-  border-radius: 2px;
-  box-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
-}
-
-/* WiFi Indicator */
-.wifi-indicator {
-  gap: 6px;
-}
-
-.wifi-bars {
-  display: flex;
-  align-items: end;
-  gap: 1px;
-  height: 12px;
-}
-
-.wifi-bar {
   transition: all 0.3s ease;
-  border-radius: 1px;
 }
 
-.wifi-bar.active {
-  box-shadow: 0 0 2px rgba(16, 185, 129, 0.4);
+.panel-indicator:hover {
+  color: rgba(255, 255, 255, 1);
 }
 
-/* Battery Indicator */
-.battery-indicator {
-  gap: 6px;
-}
-
-.battery-container {
+.user-menu {
   display: flex;
   align-items: center;
-  gap: 1px;
+  gap: 4px;
 }
 
-.battery-body {
-  width: 20px;
-  height: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 2px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.battery-fill {
-  height: 100%;
-  border-radius: 1px;
-  transition: all 0.5s ease;
-  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2);
-}
-
-.battery-tip {
-  width: 2px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 0 1px 1px 0;
-}
-
-.battery-percentage {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 11px;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  min-width: 28px;
-  text-align: right;
-}
-
-/* User Indicator */
-.user-indicator {
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  margin-left: 8px;
-}
-
-.user-indicator .indicator-icon {
-  color: white;
-  width: 18px;
-  height: 18px;
-}
-
-.user-indicator:hover {
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 16px rgba(102, 126, 234, 0.3);
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 600px) {
   .top-panel {
-    padding: 0 16px;
+    flex-direction: column;
+    height: auto;
+    padding: 8px;
+    gap: 5px;
   }
-  
-  .panel-left {
-    gap: 12px;
-  }
-  
-  .system-indicators {
+
+  .panel-left, .panel-right {
     gap: 8px;
   }
-  
-  .battery-percentage {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .top-panel {
-    height: 44px;
-    padding: 0 12px;
-  }
-  
-  .activities-button {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-  
-  .clock-time {
-    font-size: 14px;
-  }
-  
-  .clock-date {
-    font-size: 10px;
-  }
-  
-  .system-indicators {
-    gap: 6px;
-    padding: 4px 8px;
-  }
-  
-  .indicator {
-    padding: 4px 6px;
-  }
-  
-  .indicator-icon {
-    width: 14px;
-    height: 14px;
-  }
-  
-  .volume-bar {
-    width: 24px;
-  }
-  
-  .user-indicator {
-    width: 28px;
-    height: 28px;
-    margin-left: 6px;
-  }
-  
-  .activities-menu {
-    min-width: 240px;
-    top: 52px;
-  }
-}
-
-@media (max-width: 480px) {
-  .top-panel {
-    height: 40px;
-    padding: 0 8px;
-  }
-  
-  .clock-container {
-    padding: 4px 8px;
-  }
-  
-  .clock-date {
-    display: none;
-  }
-  
-  .volume-indicator {
-    display: none;
-  }
-  
-  .wifi-bars {
-    display: none;
-  }
-  
-  .activities-menu {
-    left: -50px;
-    min-width: 200px;
-  }
-}
-
-/* Animations */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-.security-indicator .indicator-icon {
-  animation: pulse 3s ease-in-out infinite;
-}
-
-@keyframes glow {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(79, 172, 254, 0.4)); }
-  50% { filter: drop-shadow(0 0 8px rgba(79, 172, 254, 0.6)); }
-}
-
-.activities-button.active {
-  animation: glow 2s ease-in-out infinite;
-}
-
-/* Scrollbar for menu */
-.menu-items::-webkit-scrollbar {
-  width: 4px;
-}
-
-.menu-items::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 2px;
-}
-
-.menu-items::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-}
-
-.menu-items::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
 }

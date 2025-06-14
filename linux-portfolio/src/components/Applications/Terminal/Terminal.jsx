@@ -1,173 +1,74 @@
-// src/components/Applications/Terminal/Terminal.jsx
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import './Terminal.css';
 
+const portfolioData = {
+  about: "I'm a passionate developer with expertise in web technologies. I love building creative and interactive projects, often inspired by Linux and open-source culture.",
+  skills: "Languages: JavaScript, Python, HTML, CSS\nFrameworks: React, Node.js\nTools: Git, Docker, Bash",
+  projects: "1. Terminal Portfolio - A Linux-inspired portfolio (you’re using it!)\n2. Task Manager CLI - A command-line task manager built with Python\n3. Portfolio Desktop - A GNOME-style portfolio desktop",
+  contact: "Email: yourname@example.com\nGitHub: github.com/your-username\nLinkedIn: linkedin.com/in/your-profile"
+};
+
 const COMMANDS = {
   help: {
-    description: 'Show available commands',
-    execute: () => `Available commands:
-  help     - Show this help message
-  about    - About me
-  skills   - My technical skills
-  projects - My projects
-  contact  - Contact information
-  clear    - Clear terminal
-  whoami   - Current user info
-  ls       - List directory contents
-  pwd      - Print working directory
-  date     - Show current date and time
-  uname    - System information
-  history  - Command history
-  echo     - Display text
-  
-Type any command followed by Enter.`
+    description: 'Show this help message',
+    execute: () => `
+Available Commands:
+- <span class="command">whoami</span>: Display my name
+- <span class="command">ls</span>: List portfolio sections
+- <span class="command">cat [section].txt</span>: View section (e.g., cat about.txt)
+- <span class="command">clear</span>: Clear the terminal
+- <span class="command">help</span>: Show this help message
+- <span class="command">exit</span>: Close the terminal
+`
   },
-  
-  about: {
-    description: 'About me',
-    execute: () => `Hello! I'm a passionate Full Stack Developer 👨‍💻
-
-🎯 Passionate about creating beautiful, functional web applications
-🚀 Always learning new technologies and best practices
-💡 Love turning ideas into reality through code
-🌟 Focused on user experience and clean, maintainable code
-
-Education: Computer Science Engineering
-Location: Available for remote work worldwide
-Experience: 3+ years in web development
-
-"Code is like poetry - it should be elegant, readable, and powerful."`
-  },
-  
-  skills: {
-    description: 'Technical skills',
-    execute: () => `Technical Skills:
-
-Frontend:
-  ⚛️  React.js, Next.js, Vue.js
-  🎨  HTML5, CSS3, SASS, Tailwind CSS
-  📱  Responsive Design, Mobile-First
-  🔧  JavaScript (ES6+), TypeScript
-  
-Backend:
-  🚀  Node.js, Express.js
-  🐍  Python, Django, Flask
-  ☕  Java, Spring Boot
-  
-Database:
-  🗄️  MongoDB, PostgreSQL, MySQL
-  📊  Redis, Firebase
-  
-DevOps & Tools:
-  🐳  Docker, Kubernetes
-  ☁️  AWS, Google Cloud, Azure
-  🔧  Git, GitHub, GitLab
-  🚀  CI/CD, Jenkins
-  
-Other:
-  📡  RESTful APIs, GraphQL
-  🧪  Testing (Jest, Cypress)
-  🔍  SEO Optimization
-  🎯  Agile/Scrum Methodology`
-  },
-  
-  projects: {
-    description: 'My projects',
-    execute: () => `Recent Projects:
-
-🌟 E-Commerce Platform
-   • Full-stack React + Node.js application
-   • Features: Cart, Payment, Admin Panel
-   • Tech: React, Express, MongoDB, Stripe API
-   
-🎵 Music Streaming App
-   • Spotify-like interface with custom features
-   • Real-time audio streaming and playlists
-   • Tech: React, Node.js, Socket.io, AWS S3
-   
-📱 Task Management System
-   • Collaborative project management tool
-   • Real-time updates and team collaboration
-   • Tech: Next.js, PostgreSQL, Socket.io
-   
-🤖 AI Chat Application
-   • Integration with OpenAI API
-   • Custom chat interface and conversation history
-   • Tech: React, Python, FastAPI, OpenAI
-   
-Visit my GitHub for more projects and code samples!`
-  },
-  
-  contact: {
-    description: 'Contact information',
-    execute: () => `Contact Information:
-
-📧 Email: your.email@example.com
-💼 LinkedIn: linkedin.com/in/yourprofile
-🐱 GitHub: github.com/yourusername
-🌐 Portfolio: your-portfolio.com
-📱 Phone: +1 (555) 123-4567
-
-📍 Location: Available for remote work worldwide
-🕒 Timezone: UTC-5 (EST)
-
-💬 Feel free to reach out for:
-   • Job opportunities
-   • Collaboration projects
-   • Technical discussions
-   • Freelance work
-
-"Let's build something amazing together!"`
-  },
-  
   whoami: {
-    description: 'Current user info',
-    execute: () => 'guest@portfolio-linux:~$'
+    description: 'Display my name',
+    execute: () => 'Arya'
   },
-  
   ls: {
-    description: 'List directory contents',
-    execute: () => `total 8
-drwxr-xr-x 2 guest guest 4096 Jun 13 08:30 Desktop
-drwxr-xr-x 2 guest guest 4096 Jun 13 08:30 Documents
-drwxr-xr-x 2 guest guest 4096 Jun 13 08:30 Downloads
-drwxr-xr-x 2 guest guest 4096 Jun 13 08:30 Pictures
-drwxr-xr-x 2 guest guest 4096 Jun 13 08:30 Projects
--rw-r--r-- 1 guest guest  220 Jun 13 08:30 README.txt`
+    description: 'List portfolio sections',
+    execute: () => 'about.txt  skills.txt  projects.txt  contact.txt'
   },
-  
-  pwd: {
-    description: 'Print working directory',
-    execute: () => '/home/guest'
+  cat: {
+    description: 'View section',
+    execute: (args) => {
+      const file = args[0];
+      if (!file || !file.endsWith('.txt')) {
+        return `cat: Please specify a file (e.g., cat about.txt)`;
+      }
+      const section = file.replace('.txt', '').toLowerCase();
+      return portfolioData[section] || `cat: ${file}: No such file`;
+    }
   },
-  
-  date: {
-    description: 'Show current date and time',
-    execute: () => new Date().toString()
-  },
-  
-  uname: {
-    description: 'System information',
-    execute: () => 'Linux portfolio-linux 5.15.0-generic #72-Ubuntu SMP x86_64 GNU/Linux'
-  },
-  
   clear: {
-    description: 'Clear terminal',
-    execute: 'clear'
+    description: 'Clear the terminal',
+    execute: () => 'clear'
+  },
+  exit: {
+    description: 'Close the terminal',
+    execute: () => 'exit'
   }
 };
 
 export const Terminal = () => {
   const [history, setHistory] = useState([
-    { type: 'output', content: 'Welcome to Portfolio Linux Terminal v1.0.0' },
-    { type: 'output', content: 'Type "help" to see available commands.' },
-    { type: 'output', content: '' }
+    { type: 'output', content: `
+<span class="ascii-art">
+    _    ____  __   __    _    
+   / \\  |  _ \\ \\ \\ / /   / \\   
+  / _ \\ | |_) | \\ V /   / _ \\  
+ / ___ \\|  _ <   | |   / ___ \\ 
+/_/   \\_\\_| \\_\\  |_|  /_/   \\_\\
+                              
+ Welcome to My Terminal Portfolio!
+</span>
+<span class="output">Type <span class="command">help</span> to see available commands.</span>
+` }
   ]);
   const [currentInput, setCurrentInput] = useState('');
   const [commandHistory, setCommandHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  const [isTyping, setIsTyping] = useState(false);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
 
@@ -183,61 +84,42 @@ export const Terminal = () => {
     }
   }, [history]);
 
-  const executeCommand = (command) => {
-    const cmd = command.toLowerCase().trim();
-    const args = cmd.split(' ');
-    const baseCommand = args[0];
-    
-    if (baseCommand === 'clear') {
+  const executeCommand = (command, args) => {
+    if (command === 'clear') {
       setHistory([]);
       return;
     }
-    
-    if (baseCommand === 'echo') {
-      return args.slice(1).join(' ');
+    if (command === 'exit') {
+      const closeButton = document.querySelector(`.window-control-btn.control-close`);
+      if (closeButton) closeButton.click();
+      return;
     }
-    
-    if (baseCommand === 'history') {
-      return commandHistory.map((cmd, index) => `${index + 1}  ${cmd}`).join('\n');
+    if (COMMANDS[command]) {
+      return COMMANDS[command].execute(args);
     }
-    
-    if (COMMANDS[baseCommand]) {
-      return COMMANDS[baseCommand].execute();
-    }
-    
-    return `bash: ${baseCommand}: command not found`;
+    return `Command not found: ${command}. Type <span class="command">help</span> for available commands.`;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     if (currentInput.trim() === '') return;
-    
-    const command = currentInput.trim();
-    setCommandHistory(prev => [...prev, command]);
+
+    const input = currentInput.trim().toLowerCase();
+    const [cmd, ...args] = input.split(' ');
+    setCommandHistory((prev) => [...prev, input]);
     setHistoryIndex(-1);
-    
-    // Add command to history
-    const newHistory = [
-      ...history,
-      { type: 'input', content: `guest@portfolio-linux:~$ ${command}` }
-    ];
-    
-    // Execute command
-    const output = executeCommand(command);
-    
-    if (output && output !== 'clear') {
-      newHistory.push({ type: 'output', content: output });
+
+    setHistory((prev) => [
+      ...prev,
+      { type: 'input', content: `<span class="prompt">kirbynuggets@portfolio:~$</span> <span class="command">${input}</span>` }
+    ]);
+
+    const output = executeCommand(cmd, args);
+    if (output && output !== 'clear' && output !== 'exit') {
+      setHistory((prev) => [...prev, { type: 'output', content: `<span class="output">${output}</span>` }]);
     }
-    
-    setHistory(newHistory);
+
     setCurrentInput('');
-    
-    // Simulate typing effect for long outputs
-    if (output && output.length > 100) {
-      setIsTyping(true);
-      setTimeout(() => setIsTyping(false), 500);
-    }
   };
 
   const handleKeyDown = (e) => {
@@ -269,53 +151,31 @@ export const Terminal = () => {
 
   return (
     <div className="terminal-container" onClick={handleTerminalClick}>
-      <div className="terminal-header">
-        <div className="terminal-title">
-          <span className="terminal-icon">$</span>
-          Terminal - guest@portfolio-linux: ~
-        </div>
-      </div>
-      
-      <div ref={terminalRef} className="terminal-content">
+      <div ref={terminalRef} className="terminal-body">
         {history.map((entry, index) => (
           <motion.div
             key={index}
-            className={`terminal-line ${entry.type}`}
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, delay: index * 0.05 }}
-          >
-            <pre className="terminal-text">{entry.content}</pre>
-          </motion.div>
-        ))}
-        
-        <form onSubmit={handleSubmit} className="terminal-input-form">
-          <div className="terminal-prompt">
-            <span className="prompt-user">guest@portfolio-linux</span>
-            <span className="prompt-separator">:</span>
-            <span className="prompt-path">~</span>
-            <span className="prompt-symbol">$</span>
-          </div>
-          <input
-            ref={inputRef}
-            type="text"
-            value={currentInput}
-            onChange={(e) => setCurrentInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="terminal-input"
-            autoComplete="off"
-            spellCheck="false"
+            className={`output-line ${entry.type}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+            dangerouslySetInnerHTML={{ __html: entry.content }}
           />
-          <span className="terminal-cursor"></span>
-        </form>
-        
-        {isTyping && (
-          <div className="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        )}
+        ))}
+      </div>
+      <div className="terminal-input">
+        <span className="input-prompt">kirbynuggets@portfolio:~$</span>
+        <input
+          ref={inputRef}
+          type="text"
+          value={currentInput}
+          onChange={(e) => setCurrentInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onSubmit={handleSubmit}
+          className="command-input"
+          autoComplete="off"
+          spellCheck="false"
+        />
       </div>
     </div>
   );

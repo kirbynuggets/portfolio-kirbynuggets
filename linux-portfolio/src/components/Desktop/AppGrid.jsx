@@ -1,97 +1,185 @@
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, Code, Github, Linkedin, FileText, Settings } from 'lucide-react';
+import { Terminal, Code, Github, LinkedIn, Settings, Briefcase, User, ProjectDiagram, Envelope, Folder } from 'lucide-react';
 import { useWindowStore } from '../../stores/windowStore';
 import { Terminal as TerminalApp } from '../Applications/Terminal/Terminal';
+import FileManager from '../Applications/FileManager/FileManager';
 import './AppGrid.css';
 
-const appItems = [
-  {
-    name: 'LinkedIn',
-    icon: Linkedin,
-    action: 'linkedin',
-    href: 'https://linkedin.com/in/yourusername',
-    bgColor: '#0A66C2',
-  },
-  {
-    name: 'GitHub',
-    icon: Github,
-    action: 'github',
-    href: 'https://github.com/yourusername',
-    bgColor: '#18181B',
-  },
-  {
-    name: 'Notes',
-    icon: FileText,
-    action: 'notes',
-    component: TerminalApp,
-    bgColor: '#FBBF24',
-  },
-  {
-    name: 'Terminal',
-    icon: Terminal,
-    action: 'terminal',
-    component: TerminalApp,
-    bgColor: '#F28C38',
-  },
-  {
-    name: 'VS Code',
-    icon: Code,
-    action: 'vscode',
-    component: TerminalApp,
-    bgColor: '#0284C7',
-  },
-  {
-    name: 'Settings',
-    icon: Settings,
-    action: 'settings',
-    component: TerminalApp,
-    bgColor: '#6B7280',
-  },
-];
+const AppGrid = ({ isOpen, toggleAppGrid }) => {
+  const { open: openWindow } = useWindowStore();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState('all');
 
-export const AppGrid = ({ onClose }) => {
-  const { openWindow } = useWindowStore();
+  const apps = [
+    {
+      name: 'Terminal',
+      icon: Terminal,
+      category: 'development',
+      className: 'terminal-app-icon',
+      component: TerminalApp,
+    },
+    {
+      name: 'File Manager',
+      icon: Folder,
+      category: 'development',
+      className: 'file-manager-app-icon',
+      component: FileManager,
+    },
+    {
+      name: 'VS Code',
+      icon: Code,
+      category: 'development',
+      className: 'code-app-icon',
+      component: () => <div>VS Code Placeholder</div>,
+    },
+    {
+      name: 'GitHub',
+      icon: Github,
+      category: 'development',
+      className: 'github-app-icon',
+      link: 'https://github.com/your-username',
+    },
+    {
+      name: 'LinkedIn',
+      icon: LinkedIn,
+      category: 'social',
+      className: 'linkedin-app-icon',
+      link: 'https://linkedin.com/in/your-profile',
+    },
+    {
+      name: 'Settings',
+      icon: Settings,
+      category: 'system',
+      className: 'settings-app-icon',
+      component: () => <div>Settings Placeholder</div>,
+    },
+    {
+      name: 'Portfolio',
+      icon: Briefcase,
+      category: 'development',
+      className: 'portfolio-app-icon',
+      component: () => <div>Portfolio Placeholder</div>,
+    },
+    {
+      name: 'About Me',
+      icon: User,
+      category: 'development',
+      className: 'about-app-icon',
+      component: () => <div>About Me Placeholder</div>,
+    },
+    {
+      name: 'Projects',
+      icon: ProjectDiagram,
+      category: 'development',
+      className: 'projects-app-icon',
+      component: () => <div>Projects Placeholder</div>,
+    },
+    {
+      name: 'Contact',
+      icon: Envelope,
+      category: 'social',
+      className: 'contact-app-icon',
+      component: () => <div>Contact Placeholder</div>,
+    },
+  ];
 
-  const handleAppClick = (item) => {
-    if (item.href) {
-      window.open(item.href, '_blank');
-    } else {
+  const filteredApps = apps.filter(
+    (app) =>
+      (activeCategory === 'all' || app.category === activeCategory) &&
+      app.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleAppClick = (app) => {
+    if (app.link) {
+      window.open(app.link, '_blank');
+    } else if (app.component) {
       openWindow({
-        title: item.name,
-        component: item.component,
+        title: app.name,
+        component: app.component,
         isMinimized: false,
         isMaximized: false,
-        position: { x: 150, y: 100 },
-        size: { width: 800, height: 500 },
+        position: { x: Math.random() * 200 + 100, y: Math.random() * 200 + 100 },
+        size: { width: 600, height: 400 },
+        zIndex: 100,
       });
+      toggleAppGrid();
     }
-    onClose();
   };
 
   return (
     <motion.div
-      className="app-grid-overlay"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      className={`app-grid-overlay ${isOpen ? 'active' : ''}`}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: isOpen ? 1 : 0, scale: isOpen ? 1 : 0.95 }}
       transition={{ duration: 0.3 }}
+      onClick={(e) => e.target === e.currentTarget && toggleAppGrid()}
     >
-      <div className="app-grid-container">
-        {appItems.map((item) => (
-          <motion.div
-            key={item.name}
-            className="app-grid-item"
-            style={{ backgroundColor: item.bgColor }}
-            whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(255, 255, 255, 0.5)' }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-            onClick={() => handleAppClick(item)}
+      <div className="app-grid-header">
+        <input
+          type="text"
+          className="app-search"
+          placeholder="Type to search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          autoFocus={isOpen}
+        />
+        <div className="app-categories">
+          <div
+            className={`category-btn ${activeCategory === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveCategory('all')}
           >
-            <item.icon className="app-grid-icon" />
-            <span className="app-grid-label">{item.name}</span>
-          </motion.div>
-        ))}
+            All
+          </div>
+          <div
+            className={`category-btn ${activeCategory === 'development' ? 'active' : ''}`}
+            onClick={() => setActiveCategory('development')}
+          >
+            Development
+          </div>
+          <div
+            className={`category-btn ${activeCategory === 'social' ? 'active' : ''}`}
+            onClick={() => setActiveCategory('social')}
+          >
+            Social
+          </div>
+          <div
+            className={`category-btn ${activeCategory === 'system' ? 'active' : ''}`}
+            onClick={() => setActiveCategory('system')}
+          >
+            System
+          </div>
+        </div>
+      </div>
+      <div className="app-grid-container">
+        <motion.div className="app-grid">
+          {filteredApps.map((app) => (
+            <motion.div
+              key={app.name}
+              className="grid-app"
+              data-category={app.category}
+              onClick={() => handleAppClick(app)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.98 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className={`grid-app-icon ${app.className}`}>
+                <app.icon size={28} />
+              </div>
+              <div className="grid-app-name">{app.name}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+        <div className="pagination-dots">
+          <div className="dot active"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
+        </div>
       </div>
     </motion.div>
   );
 };
+
+export default AppGrid;
