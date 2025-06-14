@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, Code, Github, LinkedIn, Settings, Briefcase, Th, Folder } from 'lucide-react';
+import { Terminal as TerminalIcon, Code, Github, Linkedin, Settings, Briefcase, Th, Folder } from 'lucide-react';
 import { useWindowStore } from '../../stores/windowStore';
-import { Terminal } from '../Applications/Terminal/Terminal';
+import { Terminal as TerminalApp } from '../Applications/Terminal/Terminal';
 import FileManager from '../Applications/FileManager/FileManager';
 import './Dock.css';
 
@@ -14,10 +14,10 @@ const Dock = ({ toggleAppGrid }) => {
   const dockItems = [
     {
       name: 'Terminal',
-      icon: Terminal,
+      icon: TerminalIcon,
       action: 'terminal',
       className: 'terminal-app-icon',
-      component: Terminal,
+      component: TerminalApp,
     },
     {
       name: 'File Manager',
@@ -42,7 +42,7 @@ const Dock = ({ toggleAppGrid }) => {
     },
     {
       name: 'LinkedIn',
-      icon: LinkedIn,
+      icon: Linkedin,
       action: 'external',
       className: 'linkedin-app-icon',
       link: 'https://linkedin.com/in/your-profile',
