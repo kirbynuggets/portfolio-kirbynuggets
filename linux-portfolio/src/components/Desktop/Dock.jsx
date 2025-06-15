@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal as TerminalIcon, Code, Github, Linkedin, Settings, Briefcase, Th, Folder } from 'lucide-react';
+import { Terminal, Code, Github, Linkedin, Settings, Briefcase, Grid3X3, Folder } from 'lucide-react';
 import { useWindowStore } from '../../stores/windowStore';
 import { Terminal as TerminalApp } from '../Applications/Terminal/Terminal';
 import FileManager from '../Applications/FileManager/FileManager';
@@ -14,7 +14,7 @@ const Dock = ({ toggleAppGrid }) => {
   const dockItems = [
     {
       name: 'Terminal',
-      icon: TerminalIcon,
+      icon: Terminal,
       action: 'terminal',
       className: 'terminal-app-icon',
       component: TerminalApp,
@@ -63,7 +63,7 @@ const Dock = ({ toggleAppGrid }) => {
     },
     {
       name: 'App Grid',
-      icon: Th,
+      icon: Grid3X3,
       action: 'appgrid',
       className: 'grid-icon',
       onClick: toggleAppGrid,

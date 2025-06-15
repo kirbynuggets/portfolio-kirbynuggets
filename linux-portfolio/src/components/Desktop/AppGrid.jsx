@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, Code, Github, LinkedIn, Settings, Briefcase, User, ProjectDiagram, Envelope, Folder } from 'lucide-react';
+import { Terminal, Code, Github, Linkedin, Settings, Briefcase, User, Network, Mail, Folder } from 'lucide-react';
 import { useWindowStore } from '../../stores/windowStore';
 import { Terminal as TerminalApp } from '../Applications/Terminal/Terminal';
 import FileManager from '../Applications/FileManager/FileManager';
 import './AppGrid.css';
 
 const AppGrid = ({ isOpen, toggleAppGrid }) => {
-  const { open: openWindow } = useWindowStore();
+  const { openWindow } = useWindowStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
 
@@ -42,7 +42,7 @@ const AppGrid = ({ isOpen, toggleAppGrid }) => {
     },
     {
       name: 'LinkedIn',
-      icon: LinkedIn,
+      icon: Linkedin,
       category: 'social',
       className: 'linkedin-app-icon',
       link: 'https://linkedin.com/in/your-profile',
@@ -70,14 +70,14 @@ const AppGrid = ({ isOpen, toggleAppGrid }) => {
     },
     {
       name: 'Projects',
-      icon: ProjectDiagram,
+      icon: Network,
       category: 'development',
       className: 'projects-app-icon',
       component: () => <div>Projects Placeholder</div>,
     },
     {
       name: 'Contact',
-      icon: Envelope,
+      icon: Mail,
       category: 'social',
       className: 'contact-app-icon',
       component: () => <div>Contact Placeholder</div>,
