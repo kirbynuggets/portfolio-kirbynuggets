@@ -1,5 +1,5 @@
 // components/Applications/FileManager/FileManager.jsx
-import React, { useState, useEffect } from 'react';
+/*import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Folder, 
@@ -249,7 +249,7 @@ const FileManager = () => {
 
   return (
     <div className="file-manager">
-      {/* Header */}
+      //Header
       <div className="file-manager-header">
         <div className="file-manager-nav">
           <button 
@@ -319,7 +319,7 @@ const FileManager = () => {
         </div>
       </div>
 
-      {/* Toolbar */}
+      // Toolbar 
       <div className="file-manager-toolbar">
         <div className="toolbar-group">
           <button className="toolbar-button">
@@ -342,7 +342,7 @@ const FileManager = () => {
         </div>
       </div>
 
-      {/* Content */}
+      //Content 
       <div className={`file-manager-content ${viewMode}`}>
         <AnimatePresence mode="wait">
           {items.length === 0 ? (
@@ -405,7 +405,7 @@ const FileManager = () => {
         </AnimatePresence>
       </div>
 
-      {/* Status Bar */}
+      // Status Bar 
       <div className="file-manager-status">
         <div className="status-left">
           {getCurrentFolder()?.name || 'Unknown'} • {items.length} items
@@ -413,6 +413,62 @@ const FileManager = () => {
         <div className="status-right">
           {selectedItems.length > 0 && `${selectedItems.length} selected`}
         </div>
+      </div>
+    </div>
+  );
+};
+
+export default FileManager;
+*/
+import React, { useState } from 'react';
+import { Folder, File, Home, User } from 'lucide-react';
+
+const FileManager = () => {
+  const [currentPath, setCurrentPath] = useState('/home/user');
+  
+  const files = [
+    { name: 'Documents', type: 'folder', icon: Folder },
+    { name: 'Downloads', type: 'folder', icon: Folder },
+    { name: 'Desktop', type: 'folder', icon: Folder },
+    { name: 'Pictures', type: 'folder', icon: Folder },
+    { name: 'README.md', type: 'file', icon: File },
+    { name: 'portfolio.js', type: 'file', icon: File },
+  ];
+
+  return (
+    <div style={{ 
+      background: '#2d3748', 
+      color: 'white', 
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      <div style={{ 
+        padding: '10px', 
+        borderBottom: '1px solid #4a5568',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px'
+      }}>
+        <Home size={16} />
+        <span>{currentPath}</span>
+      </div>
+      
+      <div style={{ flex: 1, padding: '10px' }}>
+        {files.map((file, index) => (
+          <div key={index} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: '8px',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            ':hover': { background: '#4a5568' }
+          }}>
+            <file.icon size={16} />
+            <span>{file.name}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

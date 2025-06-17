@@ -4,6 +4,7 @@ import TopPanel from './TopPanel';
 import { WindowManager } from '../Windows/WindowManager';
 import Dock from './Dock';
 import AppGrid from './AppGrid';
+import { Wallpaper } from './Wallpaper';
 import './Desktop.css';
 
 const Desktop = () => {
@@ -15,6 +16,7 @@ const Desktop = () => {
 
   return (
     <motion.div className="desktop">
+      <Wallpaper />
       <TopPanel toggleAppGrid={toggleAppGrid} />
       <WindowManager />
       <Dock toggleAppGrid={toggleAppGrid} />

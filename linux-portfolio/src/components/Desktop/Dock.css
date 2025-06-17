@@ -10,7 +10,6 @@
   backdrop-filter: blur(10px);
   padding: 10px;
   border-radius: 15px;
-  px: 100;
   z-index: 1000;
 }
 
@@ -27,6 +26,8 @@
   color: white;
   text-decoration: none;
   position: relative;
+  border: none;
+  outline: none;
 }
 
 .dock-icon:hover {
@@ -40,26 +41,53 @@
   left: -8px;
   top: 50%;
   transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  background: #00ff00;
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+  width: 4px;
+  height: 20px;
+  background: #007acc;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(0, 122, 204, 0.5);
 }
 
-.terminal-app-icon { background: #2d3748; }
-.code-app-icon { background: #007acc; }
-.github-app-icon { background: #333; }
-.linkedin-app-icon { background: #0077b5; }
-.settings-app-icon { background: #a8edea; }
-.portfolio-app-icon { background: #4a2c5e; }
-.grid-icon { background: transparent; }
+/* App-specific icon backgrounds */
+.terminal-app-icon { 
+  background: linear-gradient(135deg, #2d3748, #1a202c);
+}
+
+.file-manager-app-icon { 
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.code-app-icon { 
+  background: linear-gradient(135deg, #007acc, #005a9e);
+}
+
+.github-app-icon { 
+  background: linear-gradient(135deg, #333, #24292e);
+}
+
+.linkedin-app-icon { 
+  background: linear-gradient(135deg, #0077b5, #005885);
+}
+
+.settings-app-icon { 
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+}
+
+.portfolio-app-icon { 
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.grid-icon { 
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
 
 .dock-separator {
   width: 40px;
   height: 2px;
   background: rgba(255, 255, 255, 0.3);
   margin: 5px auto;
+  border-radius: 1px;
 }
 
 @media (max-width: 600px) {
@@ -83,6 +111,8 @@
     left: 50%;
     top: -6px;
     transform: translateX(-50%);
+    width: 20px;
+    height: 4px;
   }
 
   .dock-separator {

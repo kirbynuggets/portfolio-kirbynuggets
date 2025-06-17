@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Wifi, Battery, Volume2, User, ChevronDown } from 'lucide-react';
 import './TopPanel.css';
 
 const TopPanel = ({ toggleAppGrid }) => {
@@ -25,18 +26,17 @@ const TopPanel = ({ toggleAppGrid }) => {
       <div className="datetime">{dateTime}</div>
       <div className="panel-right">
         <div className="panel-indicator">
-          <i className="fas fa-wifi"></i>
+          <Wifi size={14} />
         </div>
         <div className="panel-indicator">
-          <i className="fas fa-battery"></i>
+          <Battery size={14} />
         </div>
         <div className="panel-indicator">
-          <i className="fas fa-volume-high"></i>
+          <Volume2 size={14} />
         </div>
         <div className="panel-indicator user-menu">
-          <i className="fas fa-user"></i>
-          "}
-          <i className="fas fa-caret-down"></i>
+          <User size={14} />
+          <ChevronDown size={12} />
         </div>
       </div>
     </div>
@@ -44,3 +44,4 @@ const TopPanel = ({ toggleAppGrid }) => {
 };
 
 export default TopPanel;
+

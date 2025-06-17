@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+/*import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import './Terminal.css';
 
@@ -176,6 +176,82 @@ export const Terminal = () => {
           autoComplete="off"
           spellCheck="false"
         />
+      </div>
+    </div>
+  );
+};*/
+import React, { useState } from 'react';
+
+export const Terminal = () => {
+  const [input, setInput] = useState('');
+  const [history, setHistory] = useState([
+    'Welcome to Arya Portfolio Terminal',
+    'Type "help" for available commands',
+    ''
+  ]);
+
+  const handleCommand = (e) => {
+    if (e.key === 'Enter') {
+      const command = input.trim();
+      const newHistory = [...history, `$ ${command}`];
+      
+      switch (command.toLowerCase()) {
+        case 'help':
+          newHistory.push('Available commands: help, clear, about, skills, projects');
+          break;
+        case 'clear':
+          setHistory(['Welcome to Arya Portfolio Terminal', 'Type "help" for available commands', '']);
+          setInput('');
+          return;
+        case 'about':
+          newHistory.push('Full Stack Developer passionate about Linux and open source');
+          break;
+        case 'skills':
+          newHistory.push('React, Node.js, Python, Docker, Linux, DevOps');
+          break;
+        case 'projects':
+          newHistory.push('Check out my GitHub for latest projects');
+          break;
+        default:
+          newHistory.push(`Command not found: ${command}`);
+      }
+      
+      setHistory(newHistory);
+      setInput('');
+    }
+  };
+
+  return (
+    <div style={{ 
+      background: '#1e1e1e', 
+      color: '#00ff00', 
+      padding: '20px', 
+      fontFamily: 'monospace',
+      height: '100%',
+      overflow: 'auto'
+    }}>
+      <div>
+        {history.map((line, i) => (
+          <div key={i}>{line}</div>
+        ))}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>$ </span>
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleCommand}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: '#00ff00',
+              fontFamily: 'monospace',
+              outline: 'none',
+              flex: 1
+            }}
+            autoFocus
+          />
+        </div>
       </div>
     </div>
   );
