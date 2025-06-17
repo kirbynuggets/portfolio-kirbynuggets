@@ -5,21 +5,18 @@ import { Terminal as TerminalApp } from '../Applications/Terminal/Terminal';
 import FileManager from '../Applications/FileManager/FileManager';
 import './Dock.css';
 
-// Try to import icons, with fallback
-let Terminal, Code, Github, Linkedin, Settings, Briefcase, Grid3X3, Folder;
-try {
-  const icons = require('lucide-react');
-  Terminal = icons.Terminal;
-  Code = icons.Code;
-  Github = icons.Github;
-  Linkedin = icons.Linkedin;
-  Settings = icons.Settings;
-  Briefcase = icons.Briefcase;
-  Grid3X3 = icons.Grid3X3;
-  Folder = icons.Folder;
-} catch (e) {
-  console.log('Lucide React not available, using text fallbacks');
-}
+// Import icons with fallback handling
+import * as LucideIcons from 'lucide-react';
+
+// Extract icons or use fallbacks
+const Terminal = LucideIcons.Terminal;
+const Code = LucideIcons.Code;
+const Github = LucideIcons.Github;
+const Linkedin = LucideIcons.Linkedin;
+const Settings = LucideIcons.Settings;
+const Briefcase = LucideIcons.Briefcase;
+const Grid3X3 = LucideIcons.Grid3X3;
+const Folder = LucideIcons.Folder;
 
 const Dock = ({ toggleAppGrid }) => {
   const { openWindow, windows } = useWindowStore();

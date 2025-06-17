@@ -9,6 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "scripts": {
+  "start": "vite",
+  "dev": "vite"
+  },
   "dependencies": {
     "framer-motion": "^12.18.1",
     "lucide-react": "^0.514.0",
