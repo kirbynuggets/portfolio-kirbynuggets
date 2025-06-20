@@ -7,21 +7,40 @@ src/
 │   │   └── visual-studio-code.tsx
 ├── components/
 │   ├── Desktop/
-│   │   ├── Desktop.tsx
-│   │   ├── Wallpaper.tsx
-│   │   ├── TopPanel.tsx
-│   │   └── Dock.tsx
+│   │   ├── Desktop.jsx
+│   │   ├── Desktop.css
+│   │   ├── Dock.jsx
+│   │   ├── Dock.css
+│   │   ├── Desktop.jsx
+│   │   ├── TopPanel.jsx
+│   │   ├── TopPanel.css
+│   │   ├── Wallpaper.css
+│   │   ├── Wallpaper.jsx
+│   │   ├── AppGrid.css
+│   │   └── AppGrid.jsx
 │   ├── Applications/
-│   │   ├── Terminal/
-│   │   ├── FileManager/
+│   │   ├─|FileManager/
+|   |   | ├──FileManager.jsx
+|   |   | └──FileManager.css
 │   │   ├── VSCode/
 │   │   ├── Browser/
-│   │   └── Settings/
+│   │   └── Terminal/
+|   |   | ├──Terminal.jsx
+|   |   | └──Terminal.css
 │   ├── Windows/
-│   │   ├── Window.tsx
-│   │   └── WindowManager.tsx
+│   │   ├── Windows.jsx
+│   │   ├── WindowManager.css
+│   │   └── WindowManager.jsx
+│   │   └── Settings/
 │   └── UI/
 ├── hooks/
 ├── stores/
+│   │   └── windowStore.js
 ├── utils/
-└── styles/
+├── styles/
+      └── global.css
+└── utils/
+│   │   ├── App.css
+│   │   ├── App.tsx
+│   │   ├── index.css
+│   │   └── main.tsx
