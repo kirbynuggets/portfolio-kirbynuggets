@@ -1,4 +1,10 @@
 src/
+├── assets/
+│   ├── icons/
+│   │   ├── github.svg
+│   │   ├── linkedin.svg
+│   │   ├── settings.svg
+│   │   └── visual-studio-code.tsx
 ├── components/
 │   ├── Desktop/
 │   │   ├── Desktop.tsx

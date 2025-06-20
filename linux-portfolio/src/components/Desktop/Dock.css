@@ -1,3 +1,4 @@
+/* src/components/Desktop/Dock.css */
 .dock {
   position: fixed;
   left: 10px;
@@ -48,21 +49,9 @@
   box-shadow: 0 0 8px rgba(0, 122, 204, 0.5);
 }
 
-/* App-specific icon backgrounds */
+/* App-specific icon backgrounds - simplified for your 5 icons */
 .terminal-app-icon { 
   background: linear-gradient(135deg, #2d3748, #1a202c);
-}
-
-.file-manager-app-icon { 
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-}
-
-.code-app-icon { 
-  background: linear-gradient(135deg, #007acc, #005a9e);
-}
-
-.github-app-icon { 
-  background: linear-gradient(135deg, #333, #24292e);
 }
 
 .linkedin-app-icon { 
@@ -73,8 +62,8 @@
   background: linear-gradient(135deg, #6b7280, #4b5563);
 }
 
-.portfolio-app-icon { 
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+.github-app-icon { 
+  background: linear-gradient(135deg, #333, #24292e);
 }
 
 .grid-icon { 
@@ -88,6 +77,24 @@
   background: rgba(255, 255, 255, 0.3);
   margin: 5px auto;
   border-radius: 1px;
+}
+
+/* Icon specific styles */
+.svg-icon {
+  transition: all 0.3s ease;
+  filter: brightness(0) invert(1); /* Make SVGs white */
+}
+
+.dock-icon:hover .svg-icon {
+  filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.text-icon {
+  transition: all 0.3s ease;
+}
+
+.dock-icon:hover .text-icon {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 @media (max-width: 600px) {

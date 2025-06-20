@@ -1,22 +1,12 @@
+// src/components/Desktop/Dock.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useWindowStore } from '../../stores/windowStore';
 import { Terminal as TerminalApp } from '../Applications/Terminal/Terminal';
-import FileManager from '../Applications/FileManager/FileManager';
+import Icon from '../../../src/assets/icons/icon';
 import './Dock.css';
+import TerminalIcon from '../../assets/icons/TerminalIcon';
 
-// Import icons with fallback handling
-import * as LucideIcons from 'lucide-react';
-
-// Extract icons or use fallbacks
-const Terminal = LucideIcons.Terminal;
-const Code = LucideIcons.Code;
-const Github = LucideIcons.Github;
-const Linkedin = LucideIcons.Linkedin;
-const Settings = LucideIcons.Settings;
-const Briefcase = LucideIcons.Briefcase;
-const Grid3X3 = LucideIcons.Grid3X3;
-const Folder = LucideIcons.Folder;
 
 const Dock = ({ toggleAppGrid }) => {
   const { openWindow, windows } = useWindowStore();
@@ -26,58 +16,22 @@ const Dock = ({ toggleAppGrid }) => {
   const dockItems = [
     {
       name: 'Terminal',
-      icon: Terminal,
-      fallback: 'T',
+      icon: <TerminalIcon />, 
       action: 'terminal',
       className: 'terminal-app-icon',
       component: TerminalApp,
     },
-    {
-      name: 'File Manager',
-      icon: Folder,
-      fallback: 'F',
-      action: 'filemanager',
-      className: 'file-manager-app-icon',
-      component: FileManager,
-    },
-    {
-      name: 'VS Code',
-      icon: Code,
-      fallback: 'C',
-      action: 'code',
-      className: 'code-app-icon',
-      component: () => (
-        <div style={{padding: '20px', color: '#e0e0e0', fontFamily: 'monospace'}}>
-          <h2>VS Code</h2>
-          <p>Code editor coming soon...</p>
-          <pre style={{marginTop: '20px', color: '#61dafb'}}>
-{`function helloWorld() {
-  console.log("Hello from VS Code!");
-}`}
-          </pre>
-        </div>
-      ),
-    },
-    {
-      name: 'GitHub',
-      icon: Github,
-      fallback: 'G',
-      action: 'external',
-      className: 'github-app-icon',
-      link: 'https://github.com/your-username',
-    },
+    
     {
       name: 'LinkedIn',
-      icon: Linkedin,
-      fallback: 'L',
+      icon: 'linkedin',
       action: 'external',
       className: 'linkedin-app-icon',
       link: 'https://linkedin.com/in/your-profile',
     },
     {
       name: 'Settings',
-      icon: Settings,
-      fallback: 'S',
+      icon: 'settings',
       action: 'settings',
       className: 'settings-app-icon',
       component: () => (
@@ -88,22 +42,15 @@ const Dock = ({ toggleAppGrid }) => {
       ),
     },
     {
-      name: 'Portfolio',
-      icon: Briefcase,
-      fallback: 'P',
-      action: 'portfolio',
-      className: 'portfolio-app-icon',
-      component: () => (
-        <div style={{padding: '20px', color: '#e0e0e0'}}>
-          <h2>Portfolio</h2>
-          <p>View my projects and experience</p>
-        </div>
-      ),
+      name: 'GitHub',
+      icon: 'github',
+      action: 'external',
+      className: 'github-app-icon',
+      link: 'https://github.com/your-username',
     },
     {
       name: 'App Grid',
-      icon: Grid3X3,
-      fallback: '⋮',
+      icon: 'grid',
       action: 'appgrid',
       className: 'grid-icon',
       onClick: toggleAppGrid,
@@ -140,12 +87,12 @@ const Dock = ({ toggleAppGrid }) => {
             whileTap={{ scale: 0.9 }}
             title={item.name}
           >
-            {item.icon ? (
-              <item.icon size={24} />
+            {typeof item.icon === 'string' ? (
+              <Icon name={item.icon} size={24} />
             ) : (
-              <span style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>
-                {item.fallback}
-              </span>
+              <div style={{ width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {item.icon}
+              </div>
             )}
           </motion.button>
         </React.Fragment>
